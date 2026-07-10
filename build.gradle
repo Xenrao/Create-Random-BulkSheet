@@ -14,6 +14,10 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
+tasks.named('processResources') {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 version = mod_version
 group = mod_group_id
 
@@ -119,11 +123,12 @@ repositories {
     maven { url = "https://maven.createmod.net" }
     maven { url = "https://maven.ithundxr.dev/snapshots" }
     maven { url = "https://maven.ryanhcode.dev/releases" }
-
+    //maven { url = "https://maven.tterrag.com/" }
 }
 
 dependencies {
 
+   // jarJar(api("com.tterrag.registrate:Registrate:MC1.21-1.3.0+67"))
     // JEI
     compileOnly("mezz.jei:jei-1.21.1-common-api:19.21.0.247")
     compileOnly("mezz.jei:jei-1.21.1-neoforge-api:19.21.0.247")

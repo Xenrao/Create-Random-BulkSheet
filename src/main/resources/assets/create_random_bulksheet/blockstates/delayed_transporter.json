@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "target=ceiling":  { "model": "create_random_bulksheet:block/delayed_transporter/block", "x": 270, "z": 270 },
+    "target=floor":  { "model": "create_random_bulksheet:block/delayed_transporter/block", "x": 90, "z": 90 },
+    "target=wall,facing=north": { "model": "create_random_bulksheet:block/delayed_transporter/block"},
+    "target=wall,facing=south": { "model": "create_random_bulksheet:block/delayed_transporter/block", "y": 180 },
+    "target=wall,facing=west":  { "model": "create_random_bulksheet:block/delayed_transporter/block", "y": 270 },
+    "target=wall,facing=east":  { "model": "create_random_bulksheet:block/delayed_transporter/block", "y": 90 }
+  }
+}
