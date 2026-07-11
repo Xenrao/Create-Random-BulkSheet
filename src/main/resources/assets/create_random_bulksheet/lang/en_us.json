@@ -1,4 +1,5 @@
 {
   "block.create_random_bulksheet.delayed_transporter": "Delayed Transporter",
+  "block.create_random_bulksheet.fan_result_transporter": "Fan Result Transporter",
   "create_random_bulksheet.delayed_transporter.delay": "Delay"
 }

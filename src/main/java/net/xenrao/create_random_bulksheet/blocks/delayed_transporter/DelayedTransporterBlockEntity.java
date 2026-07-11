@@ -50,11 +50,11 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
     }
 
     private Direction inputDir() {
-        return ThresholdSwitchBlock.getTargetDirection(getBlockState()).getOpposite();
+        return DelayedTransporterBlock.getTargetDirection(getBlockState()).getOpposite();
     }
 
     private Direction outputDir() {
-        return ThresholdSwitchBlock.getTargetDirection(getBlockState());
+        return DelayedTransporterBlock.getTargetDirection(getBlockState());
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -220,16 +220,7 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
     }
 
     private void scanAndCollect() {
-        BlockPos target = worldPosition.relative(inputDir());
-
-        AABB scanArea = new AABB(
-                target.getX(),
-                target.getY(),
-                target.getZ(),
-                target.getX() + 1,
-                target.getY() + 1,
-                target.getZ() + 1
-        );
+        AABB scanArea = new AABB(worldPosition.relative(inputDir()));
 
         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, scanArea);
         for (ItemEntity itemEntity : items) {
