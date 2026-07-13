@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NNNNN",
+    "NFFFN",
+    "NF*FN",
+    "NFFFN",
+    "NNNNN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "F": {
+      "item": "create:fluid_tank"
+    },
+    "*": {
+      "item": "create_random_bulksheet:void_star"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:abyssal_fluid_tank",
+    "count": 1
+  }
+}

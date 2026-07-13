@@ -1,6 +1,7 @@
 package net.xenrao.create_random_bulksheet.blocks;
 
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlockEntity;
 
@@ -36,6 +37,18 @@ public class RandomBulkSheetBlockEntities {
                                     state
                             ),
                             RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.get()
+                    ).build(null) // DataFixer tipi (genelde null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AbyssalFluidTankBlockEntity>> ABYSSAL_FLUID_TANK =
+            BLOCK_ENTITIES.register("abyssal_fluid_tank", () ->
+                    BlockEntityType.Builder.of(
+                            (pos, state) -> new AbyssalFluidTankBlockEntity(
+                                    RandomBulkSheetBlockEntities.ABYSSAL_FLUID_TANK.get(),
+                                    pos,
+                                    state
+                            ),
+                            RandomBulkSheetBlocks.ABYSSAL_FLUID_TANK.get()
                     ).build(null) // DataFixer tipi (genelde null)
             );
 }

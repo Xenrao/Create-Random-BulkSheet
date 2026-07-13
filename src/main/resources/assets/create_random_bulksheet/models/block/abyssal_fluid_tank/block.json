@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "create_random_bulksheet:block/abyssal_fluid_tank/abyssal_fluid_tank_top",
+    "bottom": "create_random_bulksheet:block/abyssal_fluid_tank/abyssal_fluid_tank_bottom",
+    "side": "create_random_bulksheet:block/abyssal_fluid_tank/abyssal_fluid_tank_side"
+  }
+}

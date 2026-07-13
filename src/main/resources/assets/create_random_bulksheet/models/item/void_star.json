@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "create_random_bulksheet:item/void_star/item"
+  }
+}

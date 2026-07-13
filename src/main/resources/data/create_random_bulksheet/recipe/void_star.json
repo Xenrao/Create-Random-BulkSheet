@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NBN",
+    "B*B",
+    "NBN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "minecraft:dragon_breath"
+    },
+    "*": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:void_star",
+    "count": 1
+  }
+}

@@ -3,6 +3,8 @@ package net.xenrao.create_random_bulksheet;
 import com.tterrag.registrate.Registrate;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
+import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
+import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -36,6 +38,7 @@ public class RandomBulkSheet {
 
         // 2. SONRA block sınıfını yükle
         RandomBulkSheetBlocks.register();
+        RandomBulkSheetItems.register();
         RandomBulkSheetBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         // 3. Diğer listeners
         modEventBus.addListener(this::commonSetup);
@@ -47,6 +50,7 @@ public class RandomBulkSheet {
 
     public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         DelayedTransporterBlockEntity.registerCapabilities(event);
+        AbyssalFluidTankBlockEntity.registerCapabilities(event);
     }
     private void commonSetup(FMLCommonSetupEvent event) {}
 

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "":  { "model": "create_random_bulksheet:block/abyssal_fluid_tank/block"}
+  }
+}

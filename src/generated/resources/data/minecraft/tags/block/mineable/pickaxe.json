@@ -1,6 +1,7 @@
 {
   "values": [
     "create_random_bulksheet:delayed_transporter",
-    "create_random_bulksheet:fan_result_transporter"
+    "create_random_bulksheet:fan_result_transporter",
+    "create_random_bulksheet:abyssal_fluid_tank"
   ]
 }

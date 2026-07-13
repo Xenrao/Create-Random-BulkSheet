@@ -1,21 +1,26 @@
 package net.xenrao.create_random_bulksheet.items;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.world.item.Rarity;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
+import net.xenrao.create_random_bulksheet.items.void_star.VoidStar;
 
 public class RandomBulkSheetItems {
-/*
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(Registries.ITEM, RandomBulkSheet.MODID);
 
-    public static final DeferredHolder<Item, BlockItem> DELAYED_TRANSPORTER =
-            ITEMS.register("delayed_transporter",
-                    () -> new BlockItem(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.get(), new Item.Properties())
-            );
-*/
+    private static final Registrate REGISTRATE = RandomBulkSheet.registrate();
+
+    public static final ItemEntry<VoidStar> VOID_STAR =
+            REGISTRATE.item("void_star", VoidStar::new)
+                    .properties(p -> p
+                            .stacksTo(16)
+                            .fireResistant()
+                            .rarity(Rarity.EPIC)
+                    )
+                    .model((ctx, prov) -> {})
+                    .setData(ProviderType.LANG, (ctx, prov) -> {})
+                    .register();
+
+    public static void register() {}
 }

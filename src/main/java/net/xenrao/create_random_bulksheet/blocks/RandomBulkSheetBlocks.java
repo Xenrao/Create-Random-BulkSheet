@@ -7,9 +7,11 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
+import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlock;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlock;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlock;
 
@@ -55,6 +57,25 @@ public class RandomBulkSheetBlocks {
                     .blockstate((ctx, prov) -> {})
                     .setData(ProviderType.LANG, (ctx, prov) -> {})
                     .item()
+                    .model((ctx, prov) -> {})
+                    .build()
+                    .register();
+
+    public static final BlockEntry<AbyssalFluidTankBlock> ABYSSAL_FLUID_TANK =
+            REGISTRATE.block("abyssal_fluid_tank", AbyssalFluidTankBlock::new)
+                    .initialProperties(SharedProperties::softMetal)
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .properties(p -> p
+                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .noOcclusion()
+                            .isSuffocating((state, level, pos) -> false)
+                            .isRedstoneConductor((state, level, pos) -> false)
+                            .requiresCorrectToolForDrops()
+                    )
+                    .blockstate((ctx, prov) -> {})
+                    .setData(ProviderType.LANG, (ctx, prov) -> {})
+                    .item()
+                    .properties(p -> p.rarity(Rarity.EPIC).fireResistant())
                     .model((ctx, prov) -> {})
                     .build()
                     .register();
