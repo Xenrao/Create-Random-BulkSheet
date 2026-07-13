@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank;
+package net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
@@ -17,19 +17,19 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 
-public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<AbyssalFluidTankBlockEntity> {
+public class AbyssalEnergyTankBlock extends Block implements IWrenchable, IBE<AbyssalEnergyTankBlockEntity> {
 
-    public AbyssalFluidTankBlock(Properties properties) {
+    public AbyssalEnergyTankBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public Class<AbyssalFluidTankBlockEntity> getBlockEntityClass() {
-        return AbyssalFluidTankBlockEntity.class;
+    public Class<AbyssalEnergyTankBlockEntity> getBlockEntityClass() {
+        return AbyssalEnergyTankBlockEntity.class;
     }
     @Override
-    public BlockEntityType<? extends AbyssalFluidTankBlockEntity> getBlockEntityType() {
-        return RandomBulkSheetBlockEntities.ABYSSAL_FLUID_TANK.get();
+    public BlockEntityType<? extends AbyssalEnergyTankBlockEntity> getBlockEntityType() {
+        return RandomBulkSheetBlockEntities.ABYSSAL_ENERGY_TANK.get();
     }
 
     @Override
@@ -40,11 +40,12 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
         //if (!level.isClientSide) {
             BlockEntity be = level.getBlockEntity(pos);
 
-            if (be instanceof AbyssalFluidTankBlockEntity tank) {
+            if (be instanceof AbyssalEnergyTankBlockEntity tank) {
                 ItemStack held = player.getItemInHand(hand);
                 return tank.addGems(player, held);
+                //return ItemInteractionResult.SUCCESS;
             }
-        //}
+       // }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -55,7 +56,7 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
             if (!level.isClientSide) {
                 BlockEntity be = level.getBlockEntity(pos);
 
-                if (be instanceof AbyssalFluidTankBlockEntity tank) {
+                if (be instanceof AbyssalEnergyTankBlockEntity tank) {
 
                     if (tank.star_count > 0)
                         popResource(level, pos,
@@ -68,7 +69,6 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
                     if (tank.diamond_count > 0)
                         popResource(level, pos,
                                 new ItemStack(Items.DIAMOND, tank.diamond_count));
-
                 }
             }
 

@@ -1,7 +1,9 @@
 {
+  "itemGroup.random_bulksheet": "Create: Random 'BulkSheet'",
   "block.create_random_bulksheet.delayed_transporter": "Delayed Transporter",
   "block.create_random_bulksheet.fan_result_transporter": "Fan Result Transporter",
   "block.create_random_bulksheet.abyssal_fluid_tank": "Abyssal Fluid Tank",
+  "block.create_random_bulksheet.abyssal_energy_tank": "Abyssal Energy Tank",
   "item.create_random_bulksheet.void_star": "Void Star",
   "create_random_bulksheet.delayed_transporter.delay": "Delay"
 }

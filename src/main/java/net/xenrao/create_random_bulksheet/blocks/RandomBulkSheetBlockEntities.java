@@ -1,54 +1,39 @@
 package net.xenrao.create_random_bulksheet.blocks;
 
-import net.neoforged.neoforge.registries.DeferredHolder;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import net.xenrao.create_random_bulksheet.RandomBulkSheet;
+import net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank.AbyssalEnergyTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlockEntity;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.registries.DeferredRegister;
-
-
-
 public class RandomBulkSheetBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, "create_random_bulksheet");
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DelayedTransporterBlockEntity>> DELAYED_TRANSPORTER =
-            BLOCK_ENTITIES.register("delayed_transporter", () ->
-                    BlockEntityType.Builder.of(
-                            // Lambda'yı burada güvenli hale getiriyoruz
-                            (pos, state) -> new DelayedTransporterBlockEntity(
-                                    RandomBulkSheetBlockEntities.DELAYED_TRANSPORTER.get(),
-                                    pos,
-                                    state
-                            ),
-                            RandomBulkSheetBlocks.DELAYED_TRANSPORTER.get()
-                    ).build(null) // DataFixer tipi (genelde null)
-            );
+    private static final CreateRegistrate REGISTRATE = RandomBulkSheet.REGISTRATE;
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FanResultTransporterBlockEntity>> FAN_RESULT_TRANSPORTER =
-            BLOCK_ENTITIES.register("fan_result_transporter", () ->
-                    BlockEntityType.Builder.of(
-                            (pos, state) -> new FanResultTransporterBlockEntity(
-                                    RandomBulkSheetBlockEntities.FAN_RESULT_TRANSPORTER.get(),
-                                    pos,
-                                    state
-                            ),
-                            RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.get()
-                    ).build(null) // DataFixer tipi (genelde null)
-            );
+    public static final BlockEntityEntry<DelayedTransporterBlockEntity> DELAYED_TRANSPORTER =
+            REGISTRATE.blockEntity("delayed_transporter", DelayedTransporterBlockEntity::new)
+                    .validBlocks(RandomBulkSheetBlocks.DELAYED_TRANSPORTER)
+                    .register();
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AbyssalFluidTankBlockEntity>> ABYSSAL_FLUID_TANK =
-            BLOCK_ENTITIES.register("abyssal_fluid_tank", () ->
-                    BlockEntityType.Builder.of(
-                            (pos, state) -> new AbyssalFluidTankBlockEntity(
-                                    RandomBulkSheetBlockEntities.ABYSSAL_FLUID_TANK.get(),
-                                    pos,
-                                    state
-                            ),
-                            RandomBulkSheetBlocks.ABYSSAL_FLUID_TANK.get()
-                    ).build(null) // DataFixer tipi (genelde null)
-            );
+
+    public static final BlockEntityEntry<FanResultTransporterBlockEntity> FAN_RESULT_TRANSPORTER =
+            REGISTRATE.blockEntity("fan_result_transporter", FanResultTransporterBlockEntity::new)
+                    .validBlocks(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER)
+                    .register();
+
+
+    public static final BlockEntityEntry<AbyssalFluidTankBlockEntity> ABYSSAL_FLUID_TANK =
+            REGISTRATE.blockEntity("abyssal_fluid_tank", AbyssalFluidTankBlockEntity::new)
+                    .validBlocks(RandomBulkSheetBlocks.ABYSSAL_FLUID_TANK)
+                    .register();
+
+    public static final BlockEntityEntry<AbyssalEnergyTankBlockEntity> ABYSSAL_ENERGY_TANK =
+            REGISTRATE.blockEntity("abyssal_energy_tank", AbyssalEnergyTankBlockEntity::new)
+                    .validBlocks(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK)
+                    .register();
+
+
+    public static void register() {}
 }

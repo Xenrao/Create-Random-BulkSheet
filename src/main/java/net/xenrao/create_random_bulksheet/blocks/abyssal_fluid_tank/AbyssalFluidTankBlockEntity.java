@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,10 +34,8 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
     protected IFluidHandler fluid_capability;
 
-    private static final long MAX_CAPACITY = Integer.MAX_VALUE;
-
     private int tank_base_capacity = 1000;
-    private long tank_capacity;
+    private int tank_capacity;
 
     protected int star_count;
     protected int netherite_count;
@@ -106,15 +105,23 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
     void refreshCapability() {
         tank_capacity = (tank_base_capacity + (star_count * star_mb) + (netherite_count * netherite_mb) + (diamond_count * diamond_mb)) * 1000;
-        tank.setCapacity((int) Math.min(tank_capacity, MAX_CAPACITY));
+        if (0 > tank_capacity)
+            tank_capacity = Integer.MAX_VALUE;
+        tank.setCapacity(tank_capacity);
         fluid_capability = tank;
         invalidateCapabilities();
     }
 
 
-    public void addGems(Player player, ItemStack item) {
+    public ItemInteractionResult addGems(Player player, ItemStack item) {
+        if (item.is(RandomBulkSheetItems.VOID_STAR.get())) {
+            if (infinite)
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            else
+                infinite = true;
 
-        if (tank_capacity >= MAX_CAPACITY) return;
+        } else if (tank_capacity == Integer.MAX_VALUE)
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         if (item.is(Items.NETHER_STAR)) {
             star_count++;
@@ -125,11 +132,6 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
         } else if (item.is(Items.DIAMOND)) {
             diamond_count++;
 
-        } else if (item.is(RandomBulkSheetItems.VOID_STAR.get()) && !infinite) {
-            infinite = true;
-
-        } else {
-            return;
         }
 
         if (!player.isCreative()) item.shrink(1);
@@ -139,6 +141,8 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
         if (!level.isClientSide)
             sendData();
+
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override

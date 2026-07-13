@@ -17,11 +17,11 @@
       "item": "create:fluid_tank"
     },
     "*": {
-      "item": "create_random_bulksheet:void_star"
+      "item": "minecraft:nether_star"
     }
   },
   "result": {
-    "id": "create_random_bulksheet:abyssal_fluid_tank",
+    "id": "create_random_bulksheet:abyssal_energy_tank",
     "count": 1
   }
 }
