@@ -3,7 +3,6 @@ package net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
@@ -19,8 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.xenrao.create_random_bulksheet.Config;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 
 import java.util.List;
@@ -28,18 +27,15 @@ import java.util.List;
 
 public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-
-    private final int base_capacity = 1000000; // 1M FE
+    private final int base_capacity = Config.ENERGY_TANK_BASE_CAPACITY.get();// 1M FE
 
     protected int star_count;
     protected int netherite_count;
     protected int diamond_count;
 
-
-    private final int star_cap = 500000;
-    private final int netherite_cap = 100000;
-    private final int diamond_cap = 20000;
-
+    private final int star_cap = Config.ENERGY_TANK_STAR_CAP.get();
+    private final int netherite_cap = Config.ENERGY_TANK_NETHERITE_CAP.get();
+    private final int diamond_cap = Config.ENERGY_TANK_DIAMOND_CAP.get();
 
     private AbyssalEnergyStorage energy;
 
@@ -89,7 +85,7 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
                 () -> {
                     setChanged();
 
-                    if (!level.isClientSide)
+                    if (level != null && !level.isClientSide)
                         sendData();
                 }
         );
@@ -104,18 +100,18 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
         if (energy.getMaxEnergyStored() == Integer.MAX_VALUE)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        if(item.is(Items.NETHER_STAR)) {
+        if (item.is(Items.NETHER_STAR)) {
             star_count++;
 
-        } else if(item.is(Items.NETHERITE_INGOT)) {
+        } else if (item.is(Items.NETHERITE_INGOT)) {
             netherite_count++;
 
-        } else if(item.is(Items.DIAMOND)) {
+        } else if (item.is(Items.DIAMOND)) {
             diamond_count++;
 
         }
 
-        if(!player.isCreative())
+        if (!player.isCreative())
             item.shrink(1);
 
         refreshCapability();
@@ -125,18 +121,19 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
     }
 
 
-
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
     }
 
+/*
     @Override
     public void lazyTick() {
         super.lazyTick();
         if (star_count + netherite_count + diamond_count > 0 && base_capacity == 1000000)
             refreshCapability();
     }
+*/
 
     @Override
     protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
@@ -145,11 +142,11 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
         star_count = tag.getInt("StarCount");
         netherite_count = tag.getInt("NetheriteCount");
         diamond_count = tag.getInt("DiamondCount");
-
-        energy.setEnergy(tag.getInt("Energy"));
+        refreshCapability();
+        if (energy != null)
+            energy.setEnergy(tag.getInt("Energy"));
 
     }
-
 
 
     @Override
@@ -190,8 +187,7 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
                             .style(ChatFormatting.GOLD))
 
                     .forGoggles(tooltip, 1);
-        }
-        else {
+        } else {
             CreateLang.builder()
                     .text("Forge Energy")
                     .style(ChatFormatting.GRAY)

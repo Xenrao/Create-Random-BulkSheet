@@ -1,36 +1,52 @@
 package net.xenrao.create_random_bulksheet;
 
-import java.util.List;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    // --- Packager -> Vanilla Crafter entegrasyonu ---
+    public static final ModConfigSpec.BooleanValue ENABLE_VANILLA_CRAFTER_UNPACKING = BUILDER
+            .comment("Whether Create's Packager can deposit patterned packages directly into vanilla Crafter blocks.",
+                    "Disable this if stress-free auto-crafting feels too strong for your server.")
+            .define("enableVanillaCrafterUnpacking", true);
 
-    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+    // --- Abyssal Fluid Tank ---
+    public static final ModConfigSpec.IntValue FLUID_TANK_BASE_CAPACITY = BUILDER
+            .comment("Base capacity (in mB) of the Abyssal Fluid Tank.")
+            .defineInRange("fluidTankBaseCapacity", 1000, 1, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    public static final ModConfigSpec.IntValue FLUID_TANK_STAR_MB = BUILDER
+            .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Nether Star.")
+            .defineInRange("fluidTankStarMb", 200, 0, Integer.MAX_VALUE);
 
-    // a list of strings that are treated as resource locations for items
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
+    public static final ModConfigSpec.IntValue FLUID_TANK_NETHERITE_MB = BUILDER
+            .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Netherite Ingot.")
+            .defineInRange("fluidTankNetheriteMb", 50, 0, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue FLUID_TANK_DIAMOND_MB = BUILDER
+            .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Diamond.")
+            .defineInRange("fluidTankDiamondMb", 10, 0, Integer.MAX_VALUE);
+
+    // --- Abyssal Energy Tank ---
+    public static final ModConfigSpec.IntValue ENERGY_TANK_BASE_CAPACITY = BUILDER
+            .comment("Base capacity (in FE) of the Abyssal Energy Tank.")
+            .defineInRange("energyTankBaseCapacity", 1000000, 1, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue ENERGY_TANK_STAR_CAP = BUILDER
+            .comment("Extra FE capacity granted per Nether Star.")
+            .defineInRange("energyTankStarCap", 500000, 0, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue ENERGY_TANK_NETHERITE_CAP = BUILDER
+            .comment("Extra FE capacity granted per Netherite Ingot.")
+            .defineInRange("energyTankNetheriteCap", 100000, 0, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue ENERGY_TANK_DIAMOND_CAP = BUILDER
+            .comment("Extra FE capacity granted per Diamond.")
+            .defineInRange("energyTankDiamondCap", 20000, 0, Integer.MAX_VALUE);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    private static boolean validateItemName(final Object obj) {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
-    }
 }

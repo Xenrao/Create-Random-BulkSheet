@@ -1,8 +1,6 @@
 package net.xenrao.create_random_bulksheet.blocks.fan_result_transporter;
 
 
-
-import com.simibubi.create.content.kinetics.fan.processing.FanProcessing;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
@@ -28,6 +26,7 @@ public class FanResultTransporterBlockEntity extends SmartBlockEntity {
 
     public FanResultTransporterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        setLazyTickRate(20);
     }
 
     private Direction outputDir() {
@@ -35,7 +34,8 @@ public class FanResultTransporterBlockEntity extends SmartBlockEntity {
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     private IItemHandler grabCapability(Direction side) {
         BlockPos checkPos = worldPosition.relative(side);

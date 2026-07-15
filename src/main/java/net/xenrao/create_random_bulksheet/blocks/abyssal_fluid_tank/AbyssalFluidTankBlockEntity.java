@@ -22,6 +22,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.xenrao.create_random_bulksheet.Config;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 
@@ -34,16 +35,16 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
     protected IFluidHandler fluid_capability;
 
-    private int tank_base_capacity = 1000;
+    private int tank_base_capacity =  Config.FLUID_TANK_BASE_CAPACITY.get();
     private int tank_capacity;
 
     protected int star_count;
     protected int netherite_count;
     protected int diamond_count;
 
-    private int star_mb = 200;
-    private int netherite_mb = 50;
-    private int diamond_mb = 10;
+    private int star_mb = Config.FLUID_TANK_STAR_MB.get();
+    private int netherite_mb = Config.FLUID_TANK_NETHERITE_MB.get();
+    private int diamond_mb =Config.FLUID_TANK_DIAMOND_MB.get();
     protected boolean infinite;
 
 

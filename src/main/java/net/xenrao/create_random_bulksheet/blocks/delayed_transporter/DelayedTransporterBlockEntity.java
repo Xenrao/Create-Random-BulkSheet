@@ -42,7 +42,6 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
     private VersionedInventoryTrackerBehaviour invTracker;
     private ScrollValueBehaviour delay;
 
-    // Üst/alt komşu capability'lerini cache'liyoruz - her tick yeniden lookup yapmamak için
     private final EnumMap<Direction, BlockCapabilityCache<IItemHandler, Direction>> capCaches = new EnumMap<>(Direction.class);
 
     public DelayedTransporterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
