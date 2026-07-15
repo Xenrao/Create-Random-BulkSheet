@@ -65,23 +65,20 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
 
 
     private void refreshCapability() {
-
         int oldEnergy = energy == null ? 0 : energy.getEnergyStored();
 
+        long capacity =
+                (long) base_capacity
+                        + (long) star_count * star_cap
+                        + (long) netherite_count * netherite_cap
+                        + (long) diamond_count * diamond_cap;
 
-        int capacity =
-                base_capacity
-                        + (star_count * star_cap)
-                        + (netherite_count * netherite_cap)
-                        + (diamond_count * diamond_cap);
-
-        if (capacity < 0)
-            capacity = Integer.MAX_VALUE;
+        int finalCapacity = (int) Math.min(capacity, Integer.MAX_VALUE);
 
         energy = new AbyssalEnergyStorage(
-                capacity,
+                finalCapacity,
                 Integer.MAX_VALUE,
-                Math.min(oldEnergy, capacity),
+                Math.min(oldEnergy, finalCapacity),
                 () -> {
                     setChanged();
 
@@ -89,7 +86,6 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
                         sendData();
                 }
         );
-
 
         energy_capability = energy;
         invalidateCapabilities();

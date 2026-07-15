@@ -36,7 +36,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     protected IFluidHandler fluid_capability;
 
     private int tank_base_capacity =  Config.FLUID_TANK_BASE_CAPACITY.get();
-    private int tank_capacity;
+    private long tank_capacity;
 
     protected int star_count;
     protected int netherite_count;
@@ -105,10 +105,15 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     }
 
     void refreshCapability() {
-        tank_capacity = (tank_base_capacity + (star_count * star_mb) + (netherite_count * netherite_mb) + (diamond_count * diamond_mb)) * 1000;
-        if (0 > tank_capacity)
-            tank_capacity = Integer.MAX_VALUE;
-        tank.setCapacity(tank_capacity);
+        tank_capacity =
+                ((long) tank_base_capacity
+                        + (long) star_count * star_mb
+                        + (long) netherite_count * netherite_mb
+                        + (long) diamond_count * diamond_mb)
+                        * 1000L;
+
+        tank.setCapacity((int) Math.min(tank_capacity, Integer.MAX_VALUE));
+
         fluid_capability = tank;
         invalidateCapabilities();
     }
@@ -121,7 +126,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
             else
                 infinite = true;
 
-        } else if (tank_capacity == Integer.MAX_VALUE)
+        } else if (tank.getCapacity() == Integer.MAX_VALUE)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         if (item.is(Items.NETHER_STAR)) {

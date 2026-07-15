@@ -69,6 +69,9 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
                         popResource(level, pos,
                                 new ItemStack(Items.DIAMOND, tank.diamond_count));
 
+                    if (tank.infinite)
+                        popResource(level, pos,
+                                new ItemStack(RandomBulkSheetItems.VOID_STAR.get(), 1));
                 }
             }
 
