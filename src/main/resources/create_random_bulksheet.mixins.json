@@ -3,7 +3,8 @@
   "package": "net.xenrao.create_random_bulksheet.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "FanProcessingMixin"
+    "FanProcessingMixin",
+    "LinkedControllerItemMixin"
   ],
   "client": [],
   "server": []

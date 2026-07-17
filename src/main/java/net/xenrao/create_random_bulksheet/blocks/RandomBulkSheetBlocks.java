@@ -15,6 +15,8 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank.AbyssalEner
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlock;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlock;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlock;
+import net.xenrao.create_random_bulksheet.blocks.redstone_weight.RedstoneWeightBlock;
+import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkBlock;
 
 
 public class RandomBulkSheetBlocks {
@@ -24,6 +26,24 @@ public class RandomBulkSheetBlocks {
     static {
         REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
     }
+
+    public static final BlockEntry<RedstoneWeightBlock> REDSTONE_WEIGHT =
+            REGISTRATE.block("redstone_weight", RedstoneWeightBlock::new)
+                    .initialProperties(SharedProperties::softMetal)
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .properties(p -> p
+                            .mapColor(MapColor.COLOR_GRAY)
+                            .requiresCorrectToolForDrops()
+                    )
+                    .blockstate((ctx, prov) -> {
+                    })
+                    .setData(ProviderType.LANG, (ctx, prov) -> {
+                    })
+                    .item()
+                    .model((ctx, prov) -> {
+                    })
+                    .build()
+                    .register();
 
     public static final BlockEntry<DelayedTransporterBlock> DELAYED_TRANSPORTER =
             REGISTRATE.block("delayed_transporter", DelayedTransporterBlock::new)
@@ -107,6 +127,27 @@ public class RandomBulkSheetBlocks {
                     })
                     .item()
                     .properties(p -> p.rarity(Rarity.UNCOMMON).fireResistant())
+                    .model((ctx, prov) -> {
+                    })
+                    .build()
+                    .register();
+
+    public static final BlockEntry<ReverseRedstoneLinkBlock> REVERSE_REDSTONE_LINK =
+            REGISTRATE.block("reverse_redstone_link", ReverseRedstoneLinkBlock::new)
+                    .initialProperties(SharedProperties::softMetal)
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .properties(p -> p
+                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .noOcclusion()
+                            .isSuffocating((state, level, pos) -> false)
+                            .isRedstoneConductor((state, level, pos) -> false)
+                            .requiresCorrectToolForDrops()
+                    )
+                    .blockstate((ctx, prov) -> {
+                    })
+                    .setData(ProviderType.LANG, (ctx, prov) -> {
+                    })
+                    .item()
                     .model((ctx, prov) -> {
                     })
                     .build()

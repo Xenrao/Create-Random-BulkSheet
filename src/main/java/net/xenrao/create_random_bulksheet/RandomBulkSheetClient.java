@@ -1,33 +1,40 @@
 package net.xenrao.create_random_bulksheet;
 
-import com.simibubi.create.impl.unpacking.CrafterUnpackingHandler;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkRenderer;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
+import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
 
-// This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = RandomBulkSheet.MODID, dist = Dist.CLIENT)
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = RandomBulkSheet.MODID, value = Dist.CLIENT)
+
 public class RandomBulkSheetClient {
     public RandomBulkSheetClient(ModContainer container) {
-        // Allows NeoForge to create a config screen for this mod's configs.
-        // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
-        RandomBulkSheet.LOGGER.info("HELLO FROM CLIENT SETUP");
-        RandomBulkSheet.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        event.enqueueWork(() -> {
+            ItemBlockRenderTypes.setRenderLayer(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK.get(), RenderType.cutout());
+        });
 
+    }
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(
+                RandomBulkSheetBlockEntities.REVERSE_REDSTONE_LINK.get(),
+                ReverseRedstoneLinkRenderer::new
+        );
     }
 }

@@ -28,6 +28,8 @@ public class RandomBulkSheetCreativeTabs {
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK.asStack());
                                 output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.asStack());
+                                output.accept(RandomBulkSheetBlocks.REDSTONE_WEIGHT.asStack());
+                                output.accept(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK.asStack());
 
                                 //Item
                                 output.accept(RandomBulkSheetItems.VOID_STAR.asStack());

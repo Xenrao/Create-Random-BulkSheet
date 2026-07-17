@@ -1,0 +1,236 @@
+{
+  "selector": "create_random_bulksheet:redstone_weight",
+  "properties": {
+    "sable:mass": 0.0
+  },
+  "overrides": {
+    "power=0": {
+      "sable:mass": 0.0
+    },
+    "power=1,multiplier=1": {
+      "sable:mass": 0.25
+    },
+    "power=1,multiplier=2": {
+      "sable:mass": 0.5
+    },
+    "power=1,multiplier=3": {
+      "sable:mass": 0.75
+    },
+    "power=1,multiplier=4": {
+      "sable:mass": 1.0
+    },
+    "power=1,multiplier=5": {
+      "sable:mass": 1.25
+    },
+    "power=2,multiplier=1": {
+      "sable:mass": 0.5
+    },
+    "power=2,multiplier=2": {
+      "sable:mass": 1.0
+    },
+    "power=2,multiplier=3": {
+      "sable:mass": 1.5
+    },
+    "power=2,multiplier=4": {
+      "sable:mass": 2.0
+    },
+    "power=2,multiplier=5": {
+      "sable:mass": 2.5
+    },
+    "power=3,multiplier=1": {
+      "sable:mass": 0.75
+    },
+    "power=3,multiplier=2": {
+      "sable:mass": 1.5
+    },
+    "power=3,multiplier=3": {
+      "sable:mass": 2.25
+    },
+    "power=3,multiplier=4": {
+      "sable:mass": 3.0
+    },
+    "power=3,multiplier=5": {
+      "sable:mass": 3.75
+    },
+    "power=4,multiplier=1": {
+      "sable:mass": 1.0
+    },
+    "power=4,multiplier=2": {
+      "sable:mass": 2.0
+    },
+    "power=4,multiplier=3": {
+      "sable:mass": 3.0
+    },
+    "power=4,multiplier=4": {
+      "sable:mass": 4.0
+    },
+    "power=4,multiplier=5": {
+      "sable:mass": 5.0
+    },
+    "power=5,multiplier=1": {
+      "sable:mass": 1.25
+    },
+    "power=5,multiplier=2": {
+      "sable:mass": 2.5
+    },
+    "power=5,multiplier=3": {
+      "sable:mass": 3.75
+    },
+    "power=5,multiplier=4": {
+      "sable:mass": 5.0
+    },
+    "power=5,multiplier=5": {
+      "sable:mass": 6.25
+    },
+    "power=6,multiplier=1": {
+      "sable:mass": 1.5
+    },
+    "power=6,multiplier=2": {
+      "sable:mass": 3.0
+    },
+    "power=6,multiplier=3": {
+      "sable:mass": 4.5
+    },
+    "power=6,multiplier=4": {
+      "sable:mass": 6.0
+    },
+    "power=6,multiplier=5": {
+      "sable:mass": 7.5
+    },
+    "power=7,multiplier=1": {
+      "sable:mass": 1.75
+    },
+    "power=7,multiplier=2": {
+      "sable:mass": 3.5
+    },
+    "power=7,multiplier=3": {
+      "sable:mass": 5.25
+    },
+    "power=7,multiplier=4": {
+      "sable:mass": 7.0
+    },
+    "power=7,multiplier=5": {
+      "sable:mass": 8.75
+    },
+    "power=8,multiplier=1": {
+      "sable:mass": 2.0
+    },
+    "power=8,multiplier=2": {
+      "sable:mass": 4.0
+    },
+    "power=8,multiplier=3": {
+      "sable:mass": 6.0
+    },
+    "power=8,multiplier=4": {
+      "sable:mass": 8.0
+    },
+    "power=8,multiplier=5": {
+      "sable:mass": 10.0
+    },
+    "power=9,multiplier=1": {
+      "sable:mass": 2.25
+    },
+    "power=9,multiplier=2": {
+      "sable:mass": 4.5
+    },
+    "power=9,multiplier=3": {
+      "sable:mass": 6.75
+    },
+    "power=9,multiplier=4": {
+      "sable:mass": 9.0
+    },
+    "power=9,multiplier=5": {
+      "sable:mass": 11.25
+    },
+    "power=10,multiplier=1": {
+      "sable:mass": 2.5
+    },
+    "power=10,multiplier=2": {
+      "sable:mass": 5.0
+    },
+    "power=10,multiplier=3": {
+      "sable:mass": 7.5
+    },
+    "power=10,multiplier=4": {
+      "sable:mass": 10.0
+    },
+    "power=10,multiplier=5": {
+      "sable:mass": 12.5
+    },
+    "power=11,multiplier=1": {
+      "sable:mass": 2.75
+    },
+    "power=11,multiplier=2": {
+      "sable:mass": 5.5
+    },
+    "power=11,multiplier=3": {
+      "sable:mass": 8.25
+    },
+    "power=11,multiplier=4": {
+      "sable:mass": 11.0
+    },
+    "power=11,multiplier=5": {
+      "sable:mass": 13.75
+    },
+    "power=12,multiplier=1": {
+      "sable:mass": 3.0
+    },
+    "power=12,multiplier=2": {
+      "sable:mass": 6.0
+    },
+    "power=12,multiplier=3": {
+      "sable:mass": 9.0
+    },
+    "power=12,multiplier=4": {
+      "sable:mass": 12.0
+    },
+    "power=12,multiplier=5": {
+      "sable:mass": 15.0
+    },
+    "power=13,multiplier=1": {
+      "sable:mass": 3.25
+    },
+    "power=13,multiplier=2": {
+      "sable:mass": 6.5
+    },
+    "power=13,multiplier=3": {
+      "sable:mass": 9.75
+    },
+    "power=13,multiplier=4": {
+      "sable:mass": 13.0
+    },
+    "power=13,multiplier=5": {
+      "sable:mass": 16.25
+    },
+    "power=14,multiplier=1": {
+      "sable:mass": 3.5
+    },
+    "power=14,multiplier=2": {
+      "sable:mass": 7.0
+    },
+    "power=14,multiplier=3": {
+      "sable:mass": 10.5
+    },
+    "power=14,multiplier=4": {
+      "sable:mass": 14.0
+    },
+    "power=14,multiplier=5": {
+      "sable:mass": 17.5
+    },
+    "power=15,multiplier=1": {
+      "sable:mass": 3.75
+    },
+    "power=15,multiplier=2": {
+      "sable:mass": 7.5
+    },
+    "power=15,multiplier=3": {
+      "sable:mass": 11.25
+    },
+    "power=15,multiplier=4": {
+      "sable:mass": 15.0
+    },
+    "power=15,multiplier=5": {
+      "sable:mass": 18.75
+    }
+  }
+}

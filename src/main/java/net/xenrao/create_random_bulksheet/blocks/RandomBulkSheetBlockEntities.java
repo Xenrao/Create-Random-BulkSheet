@@ -7,6 +7,7 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank.AbyssalEner
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlockEntity;
+import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkBlockEntity;
 
 public class RandomBulkSheetBlockEntities {
 
@@ -34,6 +35,10 @@ public class RandomBulkSheetBlockEntities {
                     .validBlocks(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK)
                     .register();
 
+    public static final BlockEntityEntry<ReverseRedstoneLinkBlockEntity> REVERSE_REDSTONE_LINK =
+            REGISTRATE.blockEntity("reverse_redstone_link", ReverseRedstoneLinkBlockEntity::new)
+                    .validBlocks(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK)
+                    .register();
 
     public static void register() {}
 }
