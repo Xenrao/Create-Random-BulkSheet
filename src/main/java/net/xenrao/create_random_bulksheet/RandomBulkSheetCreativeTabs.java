@@ -6,6 +6,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
+import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
+import net.xenrao.create_random_bulksheet.compat.sable.blocks.RandomBulkSheetSableBlocks;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 
 public class RandomBulkSheetCreativeTabs {
@@ -29,9 +31,10 @@ public class RandomBulkSheetCreativeTabs {
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK.asStack());
                                 output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.asStack());
-                                output.accept(RandomBulkSheetBlocks.REDSTONE_WEIGHT.asStack());
                                 output.accept(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK.asStack());
-
+                                if (SableCompatDispatcher.isLoaded()) {
+                                    output.accept(RandomBulkSheetSableBlocks.REDSTONE_WEIGHT.asStack());
+                                }
                                 //Item
                                 output.accept(RandomBulkSheetItems.VOID_STAR.asStack());
                             })

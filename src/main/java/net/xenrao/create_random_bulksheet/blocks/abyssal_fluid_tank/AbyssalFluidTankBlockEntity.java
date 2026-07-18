@@ -28,29 +28,18 @@ import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 
 import java.util.List;
 
-
 public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
     private SmartFluidTank tank;
+    protected IFluidHandler fluidCapability;
 
-    protected IFluidHandler fluid_capability;
-
-    private int tank_base_capacity =  RandomBulkSheetConfig.FLUID_TANK_BASE_CAPACITY.get();
-    private long tank_capacity;
-
-    protected int star_count;
-    protected int netherite_count;
-    protected int diamond_count;
-
-    private int star_mb = RandomBulkSheetConfig.FLUID_TANK_STAR_MB.get();
-    private int netherite_mb = RandomBulkSheetConfig.FLUID_TANK_NETHERITE_MB.get();
-    private int diamond_mb = RandomBulkSheetConfig.FLUID_TANK_DIAMOND_MB.get();
+    protected int starCount;
+    protected int netheriteCount;
+    protected int diamondCount;
     protected boolean infinite;
-
 
     public AbyssalFluidTankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-
         tank = createInventory();
         refreshCapability();
     }
@@ -65,7 +54,6 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                     result.setAmount(Math.min(maxDrain, result.getAmount()));
                     return result;
                 }
-
                 return super.drain(maxDrain, action);
             }
 
@@ -76,7 +64,6 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                     result.setAmount(Math.min(resource.getAmount(), result.getAmount()));
                     return result;
                 }
-
                 return super.drain(resource, action);
             }
         };
@@ -90,8 +77,8 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, RandomBulkSheetBlockEntities.ABYSSAL_FLUID_TANK.get(), (be, context) -> {
-            if (be.fluid_capability == null) be.refreshCapability();
-            return be.fluid_capability;
+            if (be.fluidCapability == null) be.refreshCapability();
+            return be.fluidCapability;
         });
     }
 
@@ -99,25 +86,28 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     }
 
-
     private static int getInfiniteThreshold() {
-        return AllConfigs.server().fluids.hosePulleyBlockThreshold.get() * 1000;
+        return AllConfigs.server().fluids.hosePulleyBlockThreshold.get();
+    }
+
+    private long computeCapacity() {
+        int baseCapacity = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_BASE_CAPACITY.get();
+        int starCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_STAR_CAPACITY_BONUS.get();
+        int netheriteCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_NETHERITE_CAPACITY_BONUS.get();
+        int diamondCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_DIAMOND_CAPACITY_BONUS.get();
+
+        return ((long) baseCapacity
+                + (long) starCount * starCapacityBonus
+                + (long) netheriteCount * netheriteCapacityBonus
+                + (long) diamondCount * diamondCapacityBonus);
     }
 
     void refreshCapability() {
-        tank_capacity =
-                ((long) tank_base_capacity
-                        + (long) star_count * star_mb
-                        + (long) netherite_count * netherite_mb
-                        + (long) diamond_count * diamond_mb)
-                        * 1000L;
-
-        tank.setCapacity((int) Math.min(tank_capacity, Integer.MAX_VALUE));
-
-        fluid_capability = tank;
+        long capacity = computeCapacity();
+        tank.setCapacity((int) Math.min(capacity, Integer.MAX_VALUE));
+        fluidCapability = tank;
         invalidateCapabilities();
     }
-
 
     public ItemInteractionResult addGems(Player player, ItemStack item) {
         if (item.is(RandomBulkSheetItems.VOID_STAR.get())) {
@@ -125,19 +115,15 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             else
                 infinite = true;
-
         } else if (tank.getCapacity() == Integer.MAX_VALUE)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         if (item.is(Items.NETHER_STAR)) {
-            star_count++;
-
+            starCount++;
         } else if (item.is(Items.NETHERITE_INGOT)) {
-            netherite_count++;
-
+            netheriteCount++;
         } else if (item.is(Items.DIAMOND)) {
-            diamond_count++;
-
+            diamondCount++;
         }
 
         if (!player.isCreative()) item.shrink(1);
@@ -155,9 +141,9 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.read(tag, registries, clientPacket);
 
-        star_count = tag.getInt("StarCount");
-        netherite_count = tag.getInt("NetheriteCount");
-        diamond_count = tag.getInt("DiamondCount");
+        starCount = tag.getInt("StarCount");
+        netheriteCount = tag.getInt("NetheriteCount");
+        diamondCount = tag.getInt("DiamondCount");
         infinite = tag.getBoolean("Infinite");
 
         refreshCapability();
@@ -165,13 +151,11 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
         tank.readFromNBT(registries, tag.getCompound("Tank"));
     }
 
-
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
-
-        tag.putInt("StarCount", star_count);
-        tag.putInt("NetheriteCount", netherite_count);
-        tag.putInt("DiamondCount", diamond_count);
+        tag.putInt("StarCount", starCount);
+        tag.putInt("NetheriteCount", netheriteCount);
+        tag.putInt("DiamondCount", diamondCount);
         tag.putBoolean("Infinite", infinite);
 
         tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
@@ -182,14 +166,9 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 
-        containedFluidTooltip(
-                tooltip,
-                isPlayerSneaking,
-                fluid_capability
-        );
+        containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability);
 
-
-        if ((star_count + netherite_count + diamond_count > 0 || isPlayerSneaking)) {
+        if ((starCount + netheriteCount + diamondCount > 0 || isPlayerSneaking)) {
 
             tooltip.add(Component.empty());
 
@@ -198,12 +177,16 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                     .style(ChatFormatting.LIGHT_PURPLE)
                     .forGoggles(tooltip);
 
-            if (star_count > 0 || isPlayerSneaking) {
+            int starCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_STAR_CAPACITY_BONUS.get();
+            int netheriteCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_NETHERITE_CAPACITY_BONUS.get();
+            int diamondCapacityBonus = RandomBulkSheetConfig.ABYSSAL_FLUID_TANK_DIAMOND_CAPACITY_BONUS.get();
+
+            if (starCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Nether Star: ")
                         .style(ChatFormatting.YELLOW)
                         .add(CreateLang.builder()
-                                .text("x" + star_count)
+                                .text("x" + starCount)
                                 .style(ChatFormatting.GREEN));
 
                 if (isPlayerSneaking) {
@@ -211,7 +194,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                             .add(CreateLang.builder()
                                     .text(" (")
                                     .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) star_count * star_mb * 1000)
+                            .add(CreateLang.number((long) starCount * starCapacityBonus)
                                     .style(ChatFormatting.BLUE))
                             .add(CreateLang.builder()
                                     .text("mB")
@@ -224,13 +207,12 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                 builder.forGoggles(tooltip, 1);
             }
 
-
-            if (netherite_count > 0 || isPlayerSneaking) {
+            if (netheriteCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Netherite Ingot: ")
                         .style(ChatFormatting.RED)
                         .add(CreateLang.builder()
-                                .text("x" + netherite_count)
+                                .text("x" + netheriteCount)
                                 .style(ChatFormatting.GREEN));
 
                 if (isPlayerSneaking) {
@@ -238,7 +220,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                             .add(CreateLang.builder()
                                     .text(" (")
                                     .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) netherite_count * netherite_mb * 1000)
+                            .add(CreateLang.number((long) netheriteCount * netheriteCapacityBonus)
                                     .style(ChatFormatting.BLUE))
                             .add(CreateLang.builder()
                                     .text("mB")
@@ -251,13 +233,12 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                 builder.forGoggles(tooltip, 1);
             }
 
-
-            if (diamond_count > 0 || isPlayerSneaking) {
+            if (diamondCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Diamond: ")
                         .style(ChatFormatting.AQUA)
                         .add(CreateLang.builder()
-                                .text("x" + diamond_count)
+                                .text("x" + diamondCount)
                                 .style(ChatFormatting.GREEN));
 
                 if (isPlayerSneaking) {
@@ -265,7 +246,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                             .add(CreateLang.builder()
                                     .text(" (")
                                     .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) diamond_count * diamond_mb * 1000)
+                            .add(CreateLang.number((long) diamondCount * diamondCapacityBonus)
                                     .style(ChatFormatting.BLUE))
                             .add(CreateLang.builder()
                                     .text("mB")
@@ -277,11 +258,9 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
 
                 builder.forGoggles(tooltip, 1);
             }
-
         }
 
-        boolean thresholdReached =
-                tank.getFluidAmount() >= getInfiniteThreshold();
+        boolean thresholdReached = tank.getFluidAmount() >= getInfiniteThreshold();
 
         if (thresholdReached || infinite || isPlayerSneaking) {
             tooltip.add(Component.empty());
@@ -304,7 +283,6 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                         .style(ChatFormatting.GRAY)
                         .forGoggles(tooltip, 1);
 
-
                 if (!infinite) {
                     CreateLang.builder()
                             .text("Requires a ")
@@ -317,11 +295,9 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
                             .forGoggles(tooltip, 1);
                 }
 
-
                 if (!thresholdReached) {
 
-                    long missing =
-                            getInfiniteThreshold() - tank.getFluidAmount();
+                    long missing = getInfiniteThreshold() - tank.getFluidAmount();
 
                     CreateLang.builder()
                             .text("Needs ")

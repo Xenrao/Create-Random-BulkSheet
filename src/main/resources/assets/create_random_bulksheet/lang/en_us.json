@@ -11,5 +11,59 @@
 
   "item.create_random_bulksheet.void_star": "Void Star",
 
-  "create_random_bulksheet.delayed_transporter.delay": "Delay"
+  "create_random_bulksheet.delayed_transporter.delay": "Delay",
+
+  "create_random_bulksheet.configuration.category.packager": "Packager Integration",
+
+  "create_random_bulksheet.configuration.enableVanillaCrafterUnpacking": "Enable Vanilla Crafter Unpacking",
+  "create_random_bulksheet.configuration.enableVanillaCrafterUnpacking.tooltip": "Whether Create's Packager can deposit patterned packages directly into vanilla Crafter blocks. Disable this if stress-free auto-crafting feels too strong for your server.",
+
+  "create_random_bulksheet.configuration.abyssal_blocks": "Abyssal Blocks",
+
+  "create_random_bulksheet.configuration.abyssal_fluid_tank": "Abyssal Fluid Tank",
+
+  "create_random_bulksheet.configuration.fluidTankBaseCapacity": "Base Capacity",
+  "create_random_bulksheet.configuration.fluidTankBaseCapacity.tooltip": "Base capacity (in mB) of the Abyssal Fluid Tank.",
+
+  "create_random_bulksheet.configuration.fluidTankStarMb": "Nether Star Capacity Bonus",
+  "create_random_bulksheet.configuration.fluidTankStarMb.tooltip": "Extra capacity (in mB, before the x1000 multiplier) granted per Nether Star.",
+
+  "create_random_bulksheet.configuration.fluidTankNetheriteMb": "Netherite Ingot Capacity Bonus",
+  "create_random_bulksheet.configuration.fluidTankNetheriteMb.tooltip": "Extra capacity (in mB, before the x1000 multiplier) granted per Netherite Ingot.",
+
+  "create_random_bulksheet.configuration.fluidTankDiamondMb": "Diamond Capacity Bonus",
+  "create_random_bulksheet.configuration.fluidTankDiamondMb.tooltip": "Extra capacity (in mB, before the x1000 multiplier) granted per Diamond.",
+
+  "create_random_bulksheet.configuration.abyssal_fluid_extractor": "Abyssal Fluid Extractor",
+
+  "create_random_bulksheet.configuration.enforceVoidStarRequirement": "Enforce Void Star Requirement",
+  "create_random_bulksheet.configuration.enforceVoidStarRequirement.tooltip": "If false, the Void Star requirement is ignored entirely - both for recipes that set requires_void_star and for the hardcoded rule that non-vanilla fluids need it when no recipe is found. Think of this as an easy-mode toggle.",
+
+  "create_random_bulksheet.configuration.vanillaFluidRatePerRpm": "Vanilla Fluid Rate per RPM",
+  "create_random_bulksheet.configuration.vanillaFluidRatePerRpm.tooltip": "For vanilla water/lava with no matching recipe: mB produced per tick, per RPM. (water and lava share this same value)",
+
+  "create_random_bulksheet.configuration.nonVanillaFluidRatePerRpm": "Non-Vanilla Fluid Rate per RPM",
+  "create_random_bulksheet.configuration.nonVanillaFluidRatePerRpm.tooltip": "For any other fluid with no matching recipe: mB produced per tick, per RPM.",
+
+  "create_random_bulksheet.configuration.maxBufferMb": "Max Internal Buffer",
+  "create_random_bulksheet.configuration.maxBufferMb.tooltip": "Maximum amount of fluid (in mB) the extractor can hold in its internal buffer before extraction pauses until it is drained.",
+
+  "create_random_bulksheet.configuration.abyssal_energy_tank": "Abyssal Energy Tank",
+
+  "create_random_bulksheet.configuration.energyTankBaseCapacity": "Base Capacity",
+  "create_random_bulksheet.configuration.energyTankBaseCapacity.tooltip": "Base capacity (in FE) of the Abyssal Energy Tank.",
+
+  "create_random_bulksheet.configuration.energyTankStarCap": "Nether Star Capacity Bonus",
+  "create_random_bulksheet.configuration.energyTankStarCap.tooltip": "Extra FE capacity granted per Nether Star.",
+
+  "create_random_bulksheet.configuration.energyTankNetheriteCap": "Netherite Ingot Capacity Bonus",
+  "create_random_bulksheet.configuration.energyTankNetheriteCap.tooltip": "Extra FE capacity granted per Netherite Ingot.",
+
+  "create_random_bulksheet.configuration.energyTankDiamondCap": "Diamond Capacity Bonus",
+  "create_random_bulksheet.configuration.energyTankDiamondCap.tooltip": "Extra FE capacity granted per Diamond.",
+
+  "create_random_bulksheet.configuration.kinetics": "Kinetics",
+
+  "create_random_bulksheet.configuration.extractorStressImpact": "Fluid Extractor Stress Impact",
+  "create_random_bulksheet.configuration.extractorStressImpact.tooltip": "Abyssal Fluid Extractor Stress Impact Value"
 }

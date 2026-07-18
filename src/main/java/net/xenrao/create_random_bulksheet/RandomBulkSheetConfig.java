@@ -12,25 +12,25 @@ public class RandomBulkSheetConfig {
             .define("enableVanillaCrafterUnpacking", true);
 
     static {
-        BUILDER.push("Abyssal Blocks");
+        BUILDER.push("abyssal_blocks");
         BUILDER.push("abyssal_fluid_tank");
     }
     // --- Abyssal Fluid Tank ---
-    public static final ModConfigSpec.IntValue FLUID_TANK_BASE_CAPACITY = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_FLUID_TANK_BASE_CAPACITY = BUILDER
             .comment("Base capacity (in mB) of the Abyssal Fluid Tank.")
-            .defineInRange("fluidTankBaseCapacity", 1000, 1, Integer.MAX_VALUE);
+            .defineInRange("fluidTankBaseCapacity", 1000000, 1, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue FLUID_TANK_STAR_MB = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_FLUID_TANK_STAR_CAPACITY_BONUS = BUILDER
             .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Nether Star.")
-            .defineInRange("fluidTankStarMb", 200, 0, Integer.MAX_VALUE);
+            .defineInRange("fluidTankStarMb", 200000, 0, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue FLUID_TANK_NETHERITE_MB = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_FLUID_TANK_NETHERITE_CAPACITY_BONUS = BUILDER
             .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Netherite Ingot.")
-            .defineInRange("fluidTankNetheriteMb", 50, 0, Integer.MAX_VALUE);
+            .defineInRange("fluidTankNetheriteMb", 50000, 0, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue FLUID_TANK_DIAMOND_MB = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_FLUID_TANK_DIAMOND_CAPACITY_BONUS = BUILDER
             .comment("Extra capacity (in mB, before the x1000 multiplier) granted per Diamond.")
-            .defineInRange("fluidTankDiamondMb", 10, 0, Integer.MAX_VALUE);
+            .defineInRange("fluidTankDiamondMb", 10000, 0, Integer.MAX_VALUE);
 
     static {
         BUILDER.pop();
@@ -40,22 +40,22 @@ public class RandomBulkSheetConfig {
         BUILDER.push("abyssal_fluid_extractor");
     }
     // --- Abyssal Fluid Extractor ---
-    public static final ModConfigSpec.BooleanValue EXTRACTOR_ENFORCE_VOID_STAR = BUILDER
+    public static final ModConfigSpec.BooleanValue ABYSSAL_FLUID_EXTRACTOR_ENFORCE_VOID_STAR = BUILDER
             .comment("If false, the Void Star requirement is ignored entirely - both for recipes that set",
                     "requires_void_star and for the hardcoded rule that non-vanilla fluids need it when no",
                     "recipe is found. Think of this as an easy-mode toggle.")
             .define("enforceVoidStarRequirement", true);
 
-    public static final ModConfigSpec.DoubleValue EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM = BUILDER
+    public static final ModConfigSpec.DoubleValue ABYSSAL_FLUID_EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM = BUILDER
             .comment("For vanilla water/lava with no matching recipe: mB produced per tick, per RPM.",
                     "(water and lava share this same value)")
             .defineInRange("vanillaFluidRatePerRpm", 0.001, 0.0, 1000.0);
 
-    public static final ModConfigSpec.DoubleValue EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM = BUILDER
+    public static final ModConfigSpec.DoubleValue ABYSSAL_FLUID_EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM = BUILDER
             .comment("For any other fluid with no matching recipe: mB produced per tick, per RPM.")
             .defineInRange("nonVanillaFluidRatePerRpm", 0.00015, 0.0, 1000.0);
 
-    public static final ModConfigSpec.DoubleValue EXTRACTOR_MAX_BUFFER_MB = BUILDER
+    public static final ModConfigSpec.DoubleValue ABYSSAL_FLUID_EXTRACTOR_MAX_BUFFER_MB = BUILDER
             .comment("Maximum amount of fluid (in mB) the extractor can hold in its internal buffer",
                     "before extraction pauses until it is drained.")
             .defineInRange("maxBufferMb", 500.0, 1, Double.MAX_VALUE);
@@ -69,19 +69,19 @@ public class RandomBulkSheetConfig {
     }
 
     // --- Abyssal Energy Tank ---
-    public static final ModConfigSpec.IntValue ENERGY_TANK_BASE_CAPACITY = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_ENERGY_TANK_BASE_CAPACITY = BUILDER
             .comment("Base capacity (in FE) of the Abyssal Energy Tank.")
             .defineInRange("energyTankBaseCapacity", 10000000, 1, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue ENERGY_TANK_STAR_CAP = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_ENERGY_TANK_STAR_CAPACITY_BONUS = BUILDER
             .comment("Extra FE capacity granted per Nether Star.")
             .defineInRange("energyTankStarCap", 500000, 0, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue ENERGY_TANK_NETHERITE_CAP = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_ENERGY_TANK_NETHERITE_CAPACITY_BONUS = BUILDER
             .comment("Extra FE capacity granted per Netherite Ingot.")
             .defineInRange("energyTankNetheriteCap", 100000, 0, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.IntValue ENERGY_TANK_DIAMOND_CAP = BUILDER
+    public static final ModConfigSpec.IntValue ABYSSAL_ENERGY_TANK_DIAMOND_CAPACITY_BONUS = BUILDER
             .comment("Extra FE capacity granted per Diamond.")
             .defineInRange("energyTankDiamondCap", 20000, 0, Integer.MAX_VALUE);
 
@@ -94,9 +94,9 @@ public class RandomBulkSheetConfig {
     static {
         BUILDER.push("kinetics");
     }
-    public static final ModConfigSpec.DoubleValue EXTRACTOR_STRESS_IMPACT = BUILDER
+    public static final ModConfigSpec.DoubleValue ABYSSAL_FLUID_EXTRACTOR_STRESS_IMPACT = BUILDER
             .comment("Abyssal Fluid Extractor Stress Impact Value")
-            .defineInRange("extractorStressImpact", 1024, 1, Double.MAX_VALUE);
+            .defineInRange("extractorStressImpact", 512, 1, Double.MAX_VALUE);
 
 
     static {

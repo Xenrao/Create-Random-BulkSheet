@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NEN",
+    "RIR",
+    "NTN"
+  ],
+  "key": {
+    "N": {
+      "item": "create:industrial_iron_block"
+    },
+    "E": {
+      "item": "create:electron_tube"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:redstone_weight",
+    "count": 1
+  }
+}

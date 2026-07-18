@@ -16,7 +16,9 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_extractor.Abyssal
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlock;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlock;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlock;
-import net.xenrao.create_random_bulksheet.blocks.redstone_weight.RedstoneWeightBlock;
+import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
+import net.xenrao.create_random_bulksheet.compat.sable.blocks.RandomBulkSheetSableBlocks;
+import net.xenrao.create_random_bulksheet.compat.sable.blocks.redstone_weight.RedstoneWeightBlock;
 import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkBlock;
 
 
@@ -28,30 +30,12 @@ public class RandomBulkSheetBlocks {
         REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
     }
 
-    public static final BlockEntry<RedstoneWeightBlock> REDSTONE_WEIGHT =
-            REGISTRATE.block("redstone_weight", RedstoneWeightBlock::new)
-                    .initialProperties(SharedProperties::softMetal)
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .properties(p -> p
-                            .mapColor(MapColor.COLOR_GRAY)
-                            .requiresCorrectToolForDrops()
-                    )
-                    .blockstate((ctx, prov) -> {
-                    })
-                    .setData(ProviderType.LANG, (ctx, prov) -> {
-                    })
-                    .item()
-                    .model((ctx, prov) -> {
-                    })
-                    .build()
-                    .register();
-
     public static final BlockEntry<DelayedTransporterBlock> DELAYED_TRANSPORTER =
             REGISTRATE.block("delayed_transporter", DelayedTransporterBlock::new)
                     .initialProperties(SharedProperties::softMetal)
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .properties(p -> p
-                            .mapColor(MapColor.COLOR_GRAY)
+                            .mapColor(MapColor.TERRACOTTA_YELLOW)
                             .sound(SoundType.NETHERITE_BLOCK)
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
@@ -94,7 +78,7 @@ public class RandomBulkSheetBlocks {
                     .initialProperties(SharedProperties::softMetal)
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .properties(p -> p
-                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .mapColor(MapColor.COLOR_GRAY)
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isRedstoneConductor((state, level, pos) -> false)
@@ -116,7 +100,7 @@ public class RandomBulkSheetBlocks {
                     .initialProperties(SharedProperties::softMetal)
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .properties(p -> p
-                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .mapColor(MapColor.COLOR_GRAY)
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isRedstoneConductor((state, level, pos) -> false)
@@ -138,7 +122,7 @@ public class RandomBulkSheetBlocks {
                     .initialProperties(SharedProperties::softMetal)
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .properties(p -> p
-                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .mapColor(MapColor.COLOR_GRAY)
                             .noOcclusion()
                             .isSuffocating((state, level, pos) -> false)
                             .isRedstoneConductor((state, level, pos) -> false)
@@ -157,14 +141,11 @@ public class RandomBulkSheetBlocks {
 
     public static final BlockEntry<ReverseRedstoneLinkBlock> REVERSE_REDSTONE_LINK =
             REGISTRATE.block("reverse_redstone_link", ReverseRedstoneLinkBlock::new)
-                    .initialProperties(SharedProperties::softMetal)
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .initialProperties(SharedProperties::wooden)
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE)
                     .properties(p -> p
-                            .mapColor(MapColor.TERRACOTTA_YELLOW)
-                            .noOcclusion()
-                            .isSuffocating((state, level, pos) -> false)
-                            .isRedstoneConductor((state, level, pos) -> false)
-                            .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.TERRACOTTA_BROWN)
+                            .forceSolidOn()
                     )
                     .blockstate((ctx, prov) -> {
                     })
@@ -176,6 +157,9 @@ public class RandomBulkSheetBlocks {
                     .build()
                     .register();
 
+
     public static void register() {
+        if (SableCompatDispatcher.isLoaded())
+            RandomBulkSheetSableBlocks.register();
     }
 }

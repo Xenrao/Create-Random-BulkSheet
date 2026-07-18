@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NDN",
+    "SAS",
+    "NPN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "D": {
+      "item": "create:item_drain"
+    },
+    "A": {
+      "item": "create_random_bulksheet:abyssal_fluid_tank"
+    },
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:abyssal_fluid_extractor",
+    "count": 1
+  }
+}

@@ -27,53 +27,45 @@ import java.util.List;
 
 public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    private final int base_capacity = RandomBulkSheetConfig.ENERGY_TANK_BASE_CAPACITY.get();// 1M FE
-
-    protected int star_count;
-    protected int netherite_count;
-    protected int diamond_count;
-
-    private final int star_cap = RandomBulkSheetConfig.ENERGY_TANK_STAR_CAP.get();
-    private final int netherite_cap = RandomBulkSheetConfig.ENERGY_TANK_NETHERITE_CAP.get();
-    private final int diamond_cap = RandomBulkSheetConfig.ENERGY_TANK_DIAMOND_CAP.get();
+    protected int starCount;
+    protected int netheriteCount;
+    protected int diamondCount;
 
     private AbyssalEnergyStorage energy;
-
-    protected IEnergyStorage energy_capability;
-
+    protected IEnergyStorage energyCapability;
 
     public AbyssalEnergyTankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-
         refreshCapability();
     }
 
-
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 RandomBulkSheetBlockEntities.ABYSSAL_ENERGY_TANK.get(),
                 (be, side) -> {
-                    if (be.energy_capability == null)
+                    if (be.energyCapability == null)
                         be.refreshCapability();
-
-                    return be.energy_capability;
+                    return be.energyCapability;
                 }
         );
     }
 
+    private long computeCapacity() {
+        int baseCapacity = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_BASE_CAPACITY.get();
+        int starCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_STAR_CAPACITY_BONUS.get();
+        int netheriteCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_NETHERITE_CAPACITY_BONUS.get();
+        int diamondCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_DIAMOND_CAPACITY_BONUS.get();
+
+        return (long) baseCapacity
+                + (long) starCount * starCapacityBonus
+                + (long) netheriteCount * netheriteCapacityBonus
+                + (long) diamondCount * diamondCapacityBonus;
+    }
 
     private void refreshCapability() {
         int oldEnergy = energy == null ? 0 : energy.getEnergyStored();
-
-        long capacity =
-                (long) base_capacity
-                        + (long) star_count * star_cap
-                        + (long) netherite_count * netherite_cap
-                        + (long) diamond_count * diamond_cap;
-
-        int finalCapacity = (int) Math.min(capacity, Integer.MAX_VALUE);
+        int finalCapacity = (int) Math.min(computeCapacity(), Integer.MAX_VALUE);
 
         energy = new AbyssalEnergyStorage(
                 finalCapacity,
@@ -81,89 +73,60 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
                 Math.min(oldEnergy, finalCapacity),
                 () -> {
                     setChanged();
-
                     if (level != null && !level.isClientSide)
                         sendData();
                 }
         );
-
-        energy_capability = energy;
+        energyCapability = energy;
         invalidateCapabilities();
     }
-
 
     public ItemInteractionResult addGems(Player player, ItemStack item) {
         if (energy.getMaxEnergyStored() == Integer.MAX_VALUE)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         if (item.is(Items.NETHER_STAR)) {
-            star_count++;
-
+            starCount++;
         } else if (item.is(Items.NETHERITE_INGOT)) {
-            netherite_count++;
-
+            netheriteCount++;
         } else if (item.is(Items.DIAMOND)) {
-            diamond_count++;
-
+            diamondCount++;
         }
 
         if (!player.isCreative())
             item.shrink(1);
-
         refreshCapability();
         setChanged();
-
+        sendData();
         return ItemInteractionResult.SUCCESS;
     }
 
-
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-
     }
-
-/*
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if (star_count + netherite_count + diamond_count > 0 && base_capacity == 1000000)
-            refreshCapability();
-    }
-*/
 
     @Override
     protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.read(tag, registries, clientPacket);
-
-        star_count = tag.getInt("StarCount");
-        netherite_count = tag.getInt("NetheriteCount");
-        diamond_count = tag.getInt("DiamondCount");
+        starCount = tag.getInt("StarCount");
+        netheriteCount = tag.getInt("NetheriteCount");
+        diamondCount = tag.getInt("DiamondCount");
         refreshCapability();
         if (energy != null)
             energy.setEnergy(tag.getInt("Energy"));
-
     }
-
 
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(tag, registries, clientPacket);
-
-        tag.putInt("StarCount", star_count);
-        tag.putInt("NetheriteCount", netherite_count);
-        tag.putInt("DiamondCount", diamond_count);
-
-        tag.putInt(
-                "Energy",
-                energy.getEnergyStored()
-        );
-
+        tag.putInt("StarCount", starCount);
+        tag.putInt("NetheriteCount", netheriteCount);
+        tag.putInt("DiamondCount", diamondCount);
+        tag.putInt("Energy", energy.getEnergyStored());
     }
-
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-
         CreateLang.builder()
                 .text("Energy Container Info: ")
                 .style(ChatFormatting.WHITE)
@@ -173,136 +136,73 @@ public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IH
             CreateLang.builder()
                     .text("Capacity: ")
                     .style(ChatFormatting.GRAY)
-
-                    .add(CreateLang.number(
-                            energy.getMaxEnergyStored()
-                    ).style(ChatFormatting.GOLD))
-
-                    .add(CreateLang.builder()
-                            .text(" FE")
-                            .style(ChatFormatting.GOLD))
-
+                    .add(CreateLang.number(energy.getMaxEnergyStored()).style(ChatFormatting.GOLD))
+                    .add(CreateLang.builder().text(" FE").style(ChatFormatting.GOLD))
                     .forGoggles(tooltip, 1);
         } else {
             CreateLang.builder()
                     .text("Forge Energy")
                     .style(ChatFormatting.GRAY)
                     .forGoggles(tooltip, 1);
-
             CreateLang.builder()
-                    .add(CreateLang.number(
-                            energy.getEnergyStored()
-                    ).style(ChatFormatting.GOLD))
-
-                    .add(CreateLang.builder()
-                            .text(" FE")
-                            .style(ChatFormatting.GOLD))
-
-                    .add(CreateLang.builder()
-                            .text(" / ")
-                            .style(ChatFormatting.GRAY))
-
-                    .add(CreateLang.number(
-                            energy.getMaxEnergyStored()
-                    ).style(ChatFormatting.DARK_GRAY))
-
-                    .add(CreateLang.builder()
-                            .text(" FE")
-                            .style(ChatFormatting.DARK_GRAY))
-
+                    .add(CreateLang.number(energy.getEnergyStored()).style(ChatFormatting.GOLD))
+                    .add(CreateLang.builder().text(" FE").style(ChatFormatting.GOLD))
+                    .add(CreateLang.builder().text(" / ").style(ChatFormatting.GRAY))
+                    .add(CreateLang.number(energy.getMaxEnergyStored()).style(ChatFormatting.DARK_GRAY))
+                    .add(CreateLang.builder().text(" FE").style(ChatFormatting.DARK_GRAY))
                     .forGoggles(tooltip, 1);
-
         }
 
-        if ((star_count + netherite_count + diamond_count > 0 || isPlayerSneaking)) {
-
+        if ((starCount + netheriteCount + diamondCount > 0 || isPlayerSneaking)) {
             tooltip.add(Component.empty());
-
             CreateLang.builder()
                     .text("Upgrades:")
                     .style(ChatFormatting.LIGHT_PURPLE)
                     .forGoggles(tooltip);
 
-            if (star_count > 0 || isPlayerSneaking) {
+            int starCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_STAR_CAPACITY_BONUS.get();
+            int netheriteCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_NETHERITE_CAPACITY_BONUS.get();
+            int diamondCapacityBonus = RandomBulkSheetConfig.ABYSSAL_ENERGY_TANK_DIAMOND_CAPACITY_BONUS.get();
+
+            if (starCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Nether Star: ")
                         .style(ChatFormatting.YELLOW)
-                        .add(CreateLang.builder()
-                                .text("x" + star_count)
-                                .style(ChatFormatting.GREEN));
-
+                        .add(CreateLang.builder().text("x" + starCount).style(ChatFormatting.GREEN));
                 if (isPlayerSneaking) {
-                    builder
-                            .add(CreateLang.builder()
-                                    .text(" (")
-                                    .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) star_count * star_cap)
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(" FE")
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(")")
-                                    .style(ChatFormatting.GRAY));
+                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY))
+                            .add(CreateLang.number((long) starCount * starCapacityBonus).style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(" FE").style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
                 }
-
                 builder.forGoggles(tooltip, 1);
             }
-
-
-            if (netherite_count > 0 || isPlayerSneaking) {
+            if (netheriteCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Netherite Ingot: ")
                         .style(ChatFormatting.RED)
-                        .add(CreateLang.builder()
-                                .text("x" + netherite_count)
-                                .style(ChatFormatting.GREEN));
-
+                        .add(CreateLang.builder().text("x" + netheriteCount).style(ChatFormatting.GREEN));
                 if (isPlayerSneaking) {
-                    builder
-                            .add(CreateLang.builder()
-                                    .text(" (")
-                                    .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) netherite_count * netherite_cap)
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(" FE")
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(")")
-                                    .style(ChatFormatting.GRAY));
+                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY))
+                            .add(CreateLang.number((long) netheriteCount * netheriteCapacityBonus).style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(" FE").style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
                 }
-
                 builder.forGoggles(tooltip, 1);
             }
-
-
-            if (diamond_count > 0 || isPlayerSneaking) {
+            if (diamondCount > 0 || isPlayerSneaking) {
                 LangBuilder builder = CreateLang.builder()
                         .text("Diamond: ")
                         .style(ChatFormatting.AQUA)
-                        .add(CreateLang.builder()
-                                .text("x" + diamond_count)
-                                .style(ChatFormatting.GREEN));
-
+                        .add(CreateLang.builder().text("x" + diamondCount).style(ChatFormatting.GREEN));
                 if (isPlayerSneaking) {
-                    builder
-                            .add(CreateLang.builder()
-                                    .text(" (")
-                                    .style(ChatFormatting.GRAY))
-                            .add(CreateLang.number((long) diamond_count * diamond_cap)
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(" FE")
-                                    .style(ChatFormatting.BLUE))
-                            .add(CreateLang.builder()
-                                    .text(")")
-                                    .style(ChatFormatting.GRAY));
+                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY))
+                            .add(CreateLang.number((long) diamondCount * diamondCapacityBonus).style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(" FE").style(ChatFormatting.BLUE))
+                            .add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
                 }
-
                 builder.forGoggles(tooltip, 1);
             }
-
         }
 
         return true;

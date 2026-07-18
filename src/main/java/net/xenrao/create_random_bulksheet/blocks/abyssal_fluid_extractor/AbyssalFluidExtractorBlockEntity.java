@@ -39,11 +39,13 @@ import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 import net.xenrao.create_random_bulksheet.recipe.RandomBulkSheetRecipes;
 import net.xenrao.create_random_bulksheet.recipe.fluid_extracting.FluidExtractingRecipe;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
 
     private static final Direction PUSH_SIDE = Direction.DOWN;
+    private static final DecimalFormat RATE_FORMAT = new DecimalFormat("0.#####");
 
     protected boolean hasVoidStar;
     protected float fluidAmount;
@@ -65,7 +67,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
 
         @Override
         public int getTankCapacity(int tank) {
-            return (int) RandomBulkSheetConfig.EXTRACTOR_MAX_BUFFER_MB.get().doubleValue();
+            return (int) RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_MAX_BUFFER_MB.get().doubleValue();
         }
 
         @Override
@@ -152,7 +154,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
     }
 
     private float getMaxBuffer() {
-        return RandomBulkSheetConfig.EXTRACTOR_MAX_BUFFER_MB.get().floatValue();
+        return RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_MAX_BUFFER_MB.get().floatValue();
     }
 
     private void accumulateFluid() {
@@ -169,7 +171,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             return;
         }
         FluidState aboveState = level.getFluidState(worldPosition.above());
-        if (aboveState.isEmpty())
+        if (aboveState.isEmpty() || !aboveState.isSource())
             return;
 
         Fluid aboveFluid = aboveState.getType();
@@ -183,38 +185,38 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             }
         }
 
-        double maxBuffer = RandomBulkSheetConfig.EXTRACTOR_MAX_BUFFER_MB.get();
+        double maxBuffer = getMaxBuffer();
         if (fluidAmount >= maxBuffer)
             return;
 
-        FluidExtractingRecipe recipe = findRecipeFor(aboveFluid);
-
-        boolean requiresStar;
-        float ratePerRpm;
-
-        if (recipe != null) {
-            requiresStar = recipe.requiresVoidStar();
-            ratePerRpm = recipe.mbPerTickPerRpm();
-        } else if (isVanillaFluid(aboveFluid)) {
-            requiresStar = false;
-            ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
-        } else {
-            requiresStar = true;
-            ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
-        }
-
-        if (RandomBulkSheetConfig.EXTRACTOR_ENFORCE_VOID_STAR.get() && requiresStar && !hasVoidStar)
+        ExtractionInfo info = resolveExtractionInfo(aboveFluid);
+        if (isExtractionBlocked(info))
             return;
 
         bufferedFluid = aboveFluid;
-        fluidAmount = (float) Math.min(maxBuffer, fluidAmount + rpm * ratePerRpm);
+        fluidAmount = (float) Math.min(maxBuffer, fluidAmount + rpm * info.mbPerTickPerRpm());
     }
 
     private static boolean isVanillaFluid(Fluid fluid) {
         var holder = BuiltInRegistries.FLUID.wrapAsHolder(fluid);
         return holder.is(FluidTags.WATER) || holder.is(FluidTags.LAVA);
     }
+    private record ExtractionInfo(float mbPerTickPerRpm, boolean requiresVoidStar) {}
 
+    private ExtractionInfo resolveExtractionInfo(Fluid fluid) {
+        FluidExtractingRecipe recipe = RandomBulkSheetRecipes.getFluidExtractingRecipe(level, fluid);
+        if (recipe != null)
+            return new ExtractionInfo(recipe.mbPerTickPerRpm(), recipe.requiresVoidStar());
+        if (isVanillaFluid(fluid))
+            return new ExtractionInfo(RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM.get().floatValue(), false);
+        return new ExtractionInfo(RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM.get().floatValue(), true);
+    }
+
+    private boolean isExtractionBlocked(ExtractionInfo info) {
+        return RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_ENFORCE_VOID_STAR.get() && info.requiresVoidStar() && !hasVoidStar;
+    }
+
+    /*
     private FluidExtractingRecipe findRecipeFor(Fluid fluid) {
         if (level == null)
             return null;
@@ -227,6 +229,8 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
                 .orElse(null);
     }
 
+
+     */
     @Override
     public void lazyTick() {
         super.lazyTick();
@@ -490,28 +494,12 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
         if (level != null) {
             FluidState aboveState = level.getFluidState(worldPosition.above());
 
-            if (!aboveState.isEmpty()) {
+            if (!aboveState.isEmpty() && aboveState.isSource()) {
                 Fluid aboveFluid = aboveState.getType();
                 String aboveFluidName = aboveFluid.getFluidType().getDescription().getString();
 
-                FluidExtractingRecipe recipe = findRecipeFor(aboveFluid);
-
-                boolean requiresStar;
-                float ratePerRpm;
-
-                if (recipe != null) {
-                    requiresStar = recipe.requiresVoidStar();
-                    ratePerRpm = recipe.mbPerTickPerRpm();
-                } else if (isVanillaFluid(aboveFluid)) {
-                    requiresStar = false;
-                    ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
-                } else {
-                    requiresStar = true;
-                    ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
-                }
-
-                boolean starEnforced = RandomBulkSheetConfig.EXTRACTOR_ENFORCE_VOID_STAR.get();
-                boolean blocked = starEnforced && requiresStar && !hasVoidStar;
+                ExtractionInfo info = resolveExtractionInfo(aboveFluid);
+                boolean blocked = isExtractionBlocked(info);
 
                 CreateLang.builder()
                         .text("Extracting:")
@@ -530,15 +518,24 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
                             .add(CreateLang.builder().text(" for extraction.").style(ChatFormatting.RED))
                             .forGoggles(tooltip, 1);
                 } else {
-                    float rpm = Math.abs(getSpeed());
-                    float currentRate = rpm * ratePerRpm;
+                    float currentRate = Math.abs(getSpeed()) * info.mbPerTickPerRpm();
 
                     CreateLang.builder()
                             .add(CreateLang.builder().text(aboveFluidName).style(ChatFormatting.GOLD))
-                            .add(CreateLang.builder().text(" " + String.format("%.4fmB", currentRate)).style(ChatFormatting.AQUA))
+                            .add(CreateLang.builder().text(" " + RATE_FORMAT.format(currentRate) + "mB").style(ChatFormatting.AQUA))
                             .add(CreateLang.builder().text(" per tick").style(ChatFormatting.GRAY))
                             .forGoggles(tooltip, 1);
                 }
+            } else if (!aboveState.isEmpty()) {
+                // sıvı var ama source değil - bunu da bildirelim
+                CreateLang.builder()
+                        .text("Extracting:")
+                        .style(ChatFormatting.GRAY)
+                        .forGoggles(tooltip);
+                CreateLang.builder()
+                        .text("Fluid above is not a source block")
+                        .style(ChatFormatting.RED)
+                        .forGoggles(tooltip, 1);
             }
         }
 

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "T",
+    "B",
+    "C"
+  ],
+  "key": {
+    "T": {
+      "item": "create:electron_tube"
+    },
+    "B": {
+      "item": "create:brass_casing"
+    },
+    "C": {
+      "item": "create:smart_chute"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:delayed_transporter",
+    "count": 1
+  }
+}

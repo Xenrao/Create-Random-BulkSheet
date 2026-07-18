@@ -37,14 +37,14 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
         if (stack.isEmpty() || !(stack.is(Items.NETHER_STAR) || stack.is(Items.NETHERITE_INGOT) || stack.is(Items.DIAMOND) || stack.is(RandomBulkSheetItems.VOID_STAR.get())))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        //if (!level.isClientSide) {
+        if (!level.isClientSide) {
             BlockEntity be = level.getBlockEntity(pos);
 
             if (be instanceof AbyssalFluidTankBlockEntity tank) {
                 ItemStack held = player.getItemInHand(hand);
                 return tank.addGems(player, held);
             }
-        //}
+        }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -57,17 +57,17 @@ public class AbyssalFluidTankBlock extends Block implements IWrenchable, IBE<Aby
 
                 if (be instanceof AbyssalFluidTankBlockEntity tank) {
 
-                    if (tank.star_count > 0)
+                    if (tank.starCount > 0)
                         popResource(level, pos,
-                                new ItemStack(Items.NETHER_STAR, tank.star_count));
+                                new ItemStack(Items.NETHER_STAR, tank.starCount));
 
-                    if (tank.netherite_count > 0)
+                    if (tank.netheriteCount > 0)
                         popResource(level, pos,
-                                new ItemStack(Items.NETHERITE_INGOT, tank.netherite_count));
+                                new ItemStack(Items.NETHERITE_INGOT, tank.netheriteCount));
 
-                    if (tank.diamond_count > 0)
+                    if (tank.diamondCount > 0)
                         popResource(level, pos,
-                                new ItemStack(Items.DIAMOND, tank.diamond_count));
+                                new ItemStack(Items.DIAMOND, tank.diamondCount));
 
                     if (tank.infinite)
                         popResource(level, pos,

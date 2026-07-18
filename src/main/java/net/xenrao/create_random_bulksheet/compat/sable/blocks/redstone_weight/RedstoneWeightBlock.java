@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.blocks.redstone_weight;
+package net.xenrao.create_random_bulksheet.compat.sable.blocks.redstone_weight;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.equipment.wrench.WrenchItem;

@@ -7,7 +7,7 @@ public class RandomBulkSheetBlockStressValues {
     public static void register() {
         BlockStressValues.IMPACTS.register(
                 RandomBulkSheetBlocks.ABYSSAL_FLUID_EXTRACTOR.get(),
-                () -> RandomBulkSheetConfig.EXTRACTOR_STRESS_IMPACT.get()
+                () -> RandomBulkSheetConfig.ABYSSAL_FLUID_EXTRACTOR_STRESS_IMPACT.get()
         );
     }
 }
