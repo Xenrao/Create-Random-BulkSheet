@@ -25,6 +25,7 @@ public class RandomBulkSheetCreativeTabs {
                             .displayItems((parameters, output) -> {
                                 //Block
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_FLUID_TANK.asStack());
+                                output.accept(RandomBulkSheetBlocks.ABYSSAL_FLUID_EXTRACTOR.asStack());
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK.asStack());
                                 output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.asStack());

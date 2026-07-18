@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.xenrao.create_random_bulksheet.Config;
+import net.xenrao.create_random_bulksheet.RandomBulkSheetConfig;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 
 import java.util.List;
@@ -27,15 +27,15 @@ import java.util.List;
 
 public class AbyssalEnergyTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    private final int base_capacity = Config.ENERGY_TANK_BASE_CAPACITY.get();// 1M FE
+    private final int base_capacity = RandomBulkSheetConfig.ENERGY_TANK_BASE_CAPACITY.get();// 1M FE
 
     protected int star_count;
     protected int netherite_count;
     protected int diamond_count;
 
-    private final int star_cap = Config.ENERGY_TANK_STAR_CAP.get();
-    private final int netherite_cap = Config.ENERGY_TANK_NETHERITE_CAP.get();
-    private final int diamond_cap = Config.ENERGY_TANK_DIAMOND_CAP.get();
+    private final int star_cap = RandomBulkSheetConfig.ENERGY_TANK_STAR_CAP.get();
+    private final int netherite_cap = RandomBulkSheetConfig.ENERGY_TANK_NETHERITE_CAP.get();
+    private final int diamond_cap = RandomBulkSheetConfig.ENERGY_TANK_DIAMOND_CAP.get();
 
     private AbyssalEnergyStorage energy;
 

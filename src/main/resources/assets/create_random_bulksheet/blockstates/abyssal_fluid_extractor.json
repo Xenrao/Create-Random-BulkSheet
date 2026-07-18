@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "create_random_bulksheet:block/abyssal_fluid_extractor/block",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "create_random_bulksheet:block/abyssal_fluid_extractor/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "create_random_bulksheet:block/abyssal_fluid_extractor/block"
+    },
+    "facing=south": {
+      "model": "create_random_bulksheet:block/abyssal_fluid_extractor/block"
+    }
+  }
+}

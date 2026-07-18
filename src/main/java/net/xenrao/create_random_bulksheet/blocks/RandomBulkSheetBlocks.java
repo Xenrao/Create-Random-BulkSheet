@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
 import net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank.AbyssalEnergyTankBlock;
+import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_extractor.AbyssalFluidExtractorBlock;
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlock;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlock;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlock;
@@ -127,6 +128,28 @@ public class RandomBulkSheetBlocks {
                     })
                     .item()
                     .properties(p -> p.rarity(Rarity.UNCOMMON).fireResistant())
+                    .model((ctx, prov) -> {
+                    })
+                    .build()
+                    .register();
+
+    public static final BlockEntry<AbyssalFluidExtractorBlock> ABYSSAL_FLUID_EXTRACTOR =
+            REGISTRATE.block("abyssal_fluid_extractor", AbyssalFluidExtractorBlock::new)
+                    .initialProperties(SharedProperties::softMetal)
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .properties(p -> p
+                            .mapColor(MapColor.TERRACOTTA_YELLOW)
+                            .noOcclusion()
+                            .isSuffocating((state, level, pos) -> false)
+                            .isRedstoneConductor((state, level, pos) -> false)
+                            .requiresCorrectToolForDrops()
+                    )
+                    .blockstate((ctx, prov) -> {
+                    })
+                    .setData(ProviderType.LANG, (ctx, prov) -> {
+                    })
+                    .item()
+                    .properties(p -> p.rarity(Rarity.EPIC).fireResistant())
                     .model((ctx, prov) -> {
                     })
                     .build()
