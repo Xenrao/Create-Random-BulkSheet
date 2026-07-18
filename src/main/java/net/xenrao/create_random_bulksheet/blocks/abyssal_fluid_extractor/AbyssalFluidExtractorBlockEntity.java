@@ -5,15 +5,18 @@ import com.simibubi.create.content.fluids.FluidTransportBehaviour;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.math.BlockFace;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.ItemInteractionResult;
@@ -147,26 +150,43 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             return;
         accumulateFluid();
     }
+
     private float getMaxBuffer() {
         return RandomBulkSheetConfig.EXTRACTOR_MAX_BUFFER_MB.get().floatValue();
     }
 
     private void accumulateFluid() {
         float rpm = Math.abs(getSpeed());
-        if (rpm <= 0)
-            return;
+        if (rpm <= 0) {
+            /*
+            if (fluidAmount < 1) {
+                fluidAmount = 0;
+                bufferedFluid = Fluids.EMPTY;
+                setChanged();
+            }
 
+             */
+            return;
+        }
         FluidState aboveState = level.getFluidState(worldPosition.above());
         if (aboveState.isEmpty())
             return;
 
         Fluid aboveFluid = aboveState.getType();
 
-        if (fluidAmount > 0 && bufferedFluid != aboveFluid)
-            return;
+        if (bufferedFluid != Fluids.EMPTY && bufferedFluid != aboveFluid) {
+            // Farklı sıvı geliyor. Eski buffer'da 1mB'nin altında,
+            // asla aktarılamayacak bir kalıntı varsa temizle ki kilitlenmesin.
+            if (fluidAmount < 1f) {
+                fluidAmount = 0;
+                bufferedFluid = Fluids.EMPTY;
+            } else {
+                return; // hâlâ aktarılabilir miktar var, bekle
+            }
+        }
 
-
-        if (fluidAmount >= getMaxBuffer())
+        double maxBuffer = RandomBulkSheetConfig.EXTRACTOR_MAX_BUFFER_MB.get();
+        if (fluidAmount >= maxBuffer)
             return;
 
         FluidExtractingRecipe recipe = findRecipeFor(aboveFluid);
@@ -189,7 +209,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             return;
 
         bufferedFluid = aboveFluid;
-        fluidAmount = Math.min(getMaxBuffer(), fluidAmount + rpm * ratePerRpm);
+        fluidAmount = (float) Math.min(maxBuffer, fluidAmount + rpm * ratePerRpm);
     }
 
     private static boolean isVanillaFluid(Fluid fluid) {
@@ -224,6 +244,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             pushIntoNeighbor(target);
         else
             distributePressureDown();
+        sendData();
     }
 
     private void pushIntoNeighbor(IFluidHandler target) {
@@ -242,6 +263,7 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             fluidAmount = 0;
             bufferedFluid = Fluids.EMPTY;
         }
+
         setChanged();
     }
 
@@ -437,6 +459,93 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
             tag.putString("BufferedFluid", BuiltInRegistries.FLUID.getKey(bufferedFluid).toString());
         super.write(tag, registries, clientPacket);
     }
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+
+        tooltip.add(Component.empty());
+        CreateLang.builder()
+                .text("Fluid Extracting Info:")
+                .style(ChatFormatting.WHITE)
+                .forGoggles(tooltip);
+
+        // ---- Buffered ----
+        CreateLang.builder()
+                .text("Buffered:")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
+
+        if (bufferedFluid != Fluids.EMPTY && fluidAmount > 0) {
+            String fluidName = bufferedFluid.getFluidType().getDescription().getString();
+            CreateLang.builder()
+                    .add(CreateLang.builder().text(fluidName).style(ChatFormatting.GOLD))
+                    .add(CreateLang.builder().text(" " + String.format("%.1fmB", fluidAmount)).style(ChatFormatting.BLUE))
+                    .forGoggles(tooltip, 1);
+        } else {
+            CreateLang.builder()
+                    .text("Empty")
+                    .style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip, 1);
+        }
+
+        // ---- Extracting ----
+        if (level != null) {
+            FluidState aboveState = level.getFluidState(worldPosition.above());
+
+            if (!aboveState.isEmpty()) {
+                Fluid aboveFluid = aboveState.getType();
+                String aboveFluidName = aboveFluid.getFluidType().getDescription().getString();
+
+                FluidExtractingRecipe recipe = findRecipeFor(aboveFluid);
+
+                boolean requiresStar;
+                float ratePerRpm;
+
+                if (recipe != null) {
+                    requiresStar = recipe.requiresVoidStar();
+                    ratePerRpm = recipe.mbPerTickPerRpm();
+                } else if (isVanillaFluid(aboveFluid)) {
+                    requiresStar = false;
+                    ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
+                } else {
+                    requiresStar = true;
+                    ratePerRpm = RandomBulkSheetConfig.EXTRACTOR_NON_VANILLA_FLUID_RATE_PER_RPM.get().floatValue();
+                }
+
+                boolean starEnforced = RandomBulkSheetConfig.EXTRACTOR_ENFORCE_VOID_STAR.get();
+                boolean blocked = starEnforced && requiresStar && !hasVoidStar;
+
+                CreateLang.builder()
+                        .text("Extracting:")
+                        .style(ChatFormatting.GRAY)
+                        .forGoggles(tooltip);
+
+                if (blocked) {
+                    CreateLang.builder()
+                            .add(CreateLang.builder().text(aboveFluidName).style(ChatFormatting.GOLD))
+                            .add(CreateLang.builder().text(" Cannot extract!").style(ChatFormatting.RED))
+                            .forGoggles(tooltip, 1);
+
+                    CreateLang.builder()
+                            .add(CreateLang.builder().text("This Fluid requires a ").style(ChatFormatting.RED))
+                            .add(CreateLang.builder().text("Void Star").style(ChatFormatting.LIGHT_PURPLE))
+                            .add(CreateLang.builder().text(" for extraction.").style(ChatFormatting.RED))
+                            .forGoggles(tooltip, 1);
+                } else {
+                    float rpm = Math.abs(getSpeed());
+                    float currentRate = rpm * ratePerRpm;
+
+                    CreateLang.builder()
+                            .add(CreateLang.builder().text(aboveFluidName).style(ChatFormatting.GOLD))
+                            .add(CreateLang.builder().text(" " + String.format("%.4fmB", currentRate)).style(ChatFormatting.AQUA))
+                            .add(CreateLang.builder().text(" per tick").style(ChatFormatting.GRAY))
+                            .forGoggles(tooltip, 1);
+                }
+            }
+        }
+
+        return true;
+    }
 
     class ExtractorPumpBehaviour extends FluidTransportBehaviour {
 
@@ -470,51 +579,4 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
         }
     }
 }
-    /*
-    @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        containedFluidTooltip(tooltip, isPlayerSneaking, fluid_capability);
-        if ((star_count + netherite_count + diamond_count > 0 || isPlayerSneaking)) {
-            tooltip.add(Component.empty());
-            CreateLang.builder().text("Upgrades:").style(ChatFormatting.LIGHT_PURPLE).forGoggles(tooltip);
-            if (star_count > 0 || isPlayerSneaking) {
-                LangBuilder builder = CreateLang.builder().text("Nether Star: ").style(ChatFormatting.YELLOW).add(CreateLang.builder().text("x" + star_count).style(ChatFormatting.GREEN));
-                if (isPlayerSneaking) {
-                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY)).add(CreateLang.number((long) star_count * star_mb * 1000).style(ChatFormatting.BLUE)).add(CreateLang.builder().text("mB").style(ChatFormatting.BLUE)).add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
-                }
-                builder.forGoggles(tooltip, 1);
-            }
-            if (netherite_count > 0 || isPlayerSneaking) {
-                LangBuilder builder = CreateLang.builder().text("Netherite Ingot: ").style(ChatFormatting.RED).add(CreateLang.builder().text("x" + netherite_count).style(ChatFormatting.GREEN));
-                if (isPlayerSneaking) {
-                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY)).add(CreateLang.number((long) netherite_count * netherite_mb * 1000).style(ChatFormatting.BLUE)).add(CreateLang.builder().text("mB").style(ChatFormatting.BLUE)).add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
-                }
-                builder.forGoggles(tooltip, 1);
-            }
-            if (diamond_count > 0 || isPlayerSneaking) {
-                LangBuilder builder = CreateLang.builder().text("Diamond: ").style(ChatFormatting.AQUA).add(CreateLang.builder().text("x" + diamond_count).style(ChatFormatting.GREEN));
-                if (isPlayerSneaking) {
-                    builder.add(CreateLang.builder().text(" (").style(ChatFormatting.GRAY)).add(CreateLang.number((long) diamond_count * diamond_mb * 1000).style(ChatFormatting.BLUE)).add(CreateLang.builder().text("mB").style(ChatFormatting.BLUE)).add(CreateLang.builder().text(")").style(ChatFormatting.GRAY));
-                }
-                builder.forGoggles(tooltip, 1);
-            }
-        }
-        boolean thresholdReached = tank.getFluidAmount() >= getInfiniteThreshold();
-        if (thresholdReached || infinite || isPlayerSneaking) {
-            tooltip.add(Component.empty());
-            CreateLang.builder().text("Bottomless Supply").style(ChatFormatting.GOLD).forGoggles(tooltip);
-            if (infinite && thresholdReached) {
-                CreateLang.builder().text("Fluid inside is now considered infinite.").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-            } else {
-                CreateLang.builder().text("This block has the potential to become an infinite source.").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                if (!infinite) {
-                    CreateLang.builder().text("Requires a ").style(ChatFormatting.GRAY).add(CreateLang.builder().text("Void Star").style(ChatFormatting.LIGHT_PURPLE)).text(".").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                }
-                if (!thresholdReached) {
-                    long missing = getInfiniteThreshold() - tank.getFluidAmount();
-                    CreateLang.builder().text("Needs ").style(ChatFormatting.GRAY).add(CreateLang.number(missing).style(ChatFormatting.GOLD)).add(CreateLang.builder().text("mB").style(ChatFormatting.GOLD)).text(" more fluid.").style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-                }
-            }
-        }
-        return true;
-    } */
+

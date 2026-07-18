@@ -71,7 +71,7 @@ public class RandomBulkSheetConfig {
     // --- Abyssal Energy Tank ---
     public static final ModConfigSpec.IntValue ENERGY_TANK_BASE_CAPACITY = BUILDER
             .comment("Base capacity (in FE) of the Abyssal Energy Tank.")
-            .defineInRange("energyTankBaseCapacity", 1000000, 1, Integer.MAX_VALUE);
+            .defineInRange("energyTankBaseCapacity", 10000000, 1, Integer.MAX_VALUE);
 
     public static final ModConfigSpec.IntValue ENERGY_TANK_STAR_CAP = BUILDER
             .comment("Extra FE capacity granted per Nether Star.")
@@ -96,7 +96,7 @@ public class RandomBulkSheetConfig {
     }
     public static final ModConfigSpec.DoubleValue EXTRACTOR_STRESS_IMPACT = BUILDER
             .comment("Abyssal Fluid Extractor Stress Impact Value")
-            .defineInRange("maxBufferMb", 1024, 1, Double.MAX_VALUE);
+            .defineInRange("extractorStressImpact", 1024, 1, Double.MAX_VALUE);
 
 
     static {
