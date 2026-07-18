@@ -5,12 +5,6 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class RandomBulkSheetConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    // --- Packager -> Vanilla Crafter entegrasyonu ---
-    public static final ModConfigSpec.BooleanValue ENABLE_VANILLA_CRAFTER_UNPACKING = BUILDER
-            .comment("Whether Create's Packager can deposit patterned packages directly into vanilla Crafter blocks.",
-                    "Disable this if stress-free auto-crafting feels too strong for your server.")
-            .define("enableVanillaCrafterUnpacking", true);
-
     static {
         BUILDER.push("abyssal_blocks");
         BUILDER.push("abyssal_fluid_tank");

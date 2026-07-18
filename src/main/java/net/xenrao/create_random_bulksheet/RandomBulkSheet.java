@@ -65,9 +65,6 @@ public class RandomBulkSheet {
         AbyssalFluidTankBlockEntity.registerCapabilities(event);
         AbyssalFluidExtractorBlockEntity.registerCapabilities(event);
         AbyssalEnergyTankBlockEntity.registerCapabilities(event);
-        if (RandomBulkSheetConfig.ENABLE_VANILLA_CRAFTER_UNPACKING.get()) {
-            UnpackingHandler.REGISTRY.register(Blocks.CRAFTER, VanillaCrafterUnpackingHandler.INSTANCE);
-        }
         RandomBulkSheetBlockStressValues.register();
     }
 
