@@ -175,13 +175,11 @@ public class AbyssalFluidExtractorBlockEntity extends KineticBlockEntity {
         Fluid aboveFluid = aboveState.getType();
 
         if (bufferedFluid != Fluids.EMPTY && bufferedFluid != aboveFluid) {
-            // Farklı sıvı geliyor. Eski buffer'da 1mB'nin altında,
-            // asla aktarılamayacak bir kalıntı varsa temizle ki kilitlenmesin.
             if (fluidAmount < 1f) {
                 fluidAmount = 0;
                 bufferedFluid = Fluids.EMPTY;
             } else {
-                return; // hâlâ aktarılabilir miktar var, bekle
+                return;
             }
         }
 
