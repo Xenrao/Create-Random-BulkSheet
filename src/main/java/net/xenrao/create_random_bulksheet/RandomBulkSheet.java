@@ -1,13 +1,11 @@
 package net.xenrao.create_random_bulksheet;
 
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.api.packager.unpacking.UnpackingHandler;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -24,7 +22,6 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_energy_tank.AbyssalEner
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_extractor.AbyssalFluidExtractorBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
-import net.xenrao.create_random_bulksheet.impl.unpacking.VanillaCrafterUnpackingHandler;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
 import net.xenrao.create_random_bulksheet.recipe.RandomBulkSheetRecipes;
 import org.slf4j.Logger;
@@ -65,9 +62,6 @@ public class RandomBulkSheet {
         AbyssalFluidTankBlockEntity.registerCapabilities(event);
         AbyssalFluidExtractorBlockEntity.registerCapabilities(event);
         AbyssalEnergyTankBlockEntity.registerCapabilities(event);
-        if (RandomBulkSheetConfig.ENABLE_VANILLA_CRAFTER_UNPACKING.get()) {
-            UnpackingHandler.REGISTRY.register(Blocks.CRAFTER, VanillaCrafterUnpackingHandler.INSTANCE);
-        }
         RandomBulkSheetBlockStressValues.register();
     }
 

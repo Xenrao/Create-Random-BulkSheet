@@ -13,11 +13,6 @@
 
   "create_random_bulksheet.delayed_transporter.delay": "Delay",
 
-  "create_random_bulksheet.configuration.category.packager": "Packager Integration",
-
-  "create_random_bulksheet.configuration.enableVanillaCrafterUnpacking": "Enable Vanilla Crafter Unpacking",
-  "create_random_bulksheet.configuration.enableVanillaCrafterUnpacking.tooltip": "Whether Create's Packager can deposit patterned packages directly into vanilla Crafter blocks. Disable this if stress-free auto-crafting feels too strong for your server.",
-
   "create_random_bulksheet.configuration.abyssal_blocks": "Abyssal Blocks",
 
   "create_random_bulksheet.configuration.abyssal_fluid_tank": "Abyssal Fluid Tank",
