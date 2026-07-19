@@ -16,7 +16,13 @@ version="${mod_version}" #mandatory
 displayName="${mod_name}" #mandatory
 
 description='''
-Example mod description.
+A NeoForge addon for Create with no grand vision, no theme, no concept, no balance,
+no friends, no purpose in life, no "bulk sheets".AND-
+And who even reads this anyway? Here,a recipe for a glass of water.
+Take the glass,
+take the water,
+pour it into the glass,
+that's it.
 '''
 [[mixins]]
 config="create_random_bulksheet.mixins.json"
