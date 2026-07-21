@@ -16,8 +16,8 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_extractor.Abyssal
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlock;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlock;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlock;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsBlocks;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.SimulatedCompatDispatcher;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsBlocks;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.SimulatedCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.blocks.RandomBulkSheetSableBlocks;
 import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkBlock;

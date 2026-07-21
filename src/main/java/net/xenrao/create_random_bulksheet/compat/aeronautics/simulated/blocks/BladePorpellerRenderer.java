@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
 import net.xenrao.create_random_bulksheet.index.RandomBulkSheetPartialModels;
 import org.joml.Quaternionf;
 

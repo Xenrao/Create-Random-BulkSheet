@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics;
+package net.xenrao.create_random_bulksheet.compat.aeronautics;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -9,7 +9,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.material.MapColor;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks.BladePropellerBlock;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks.BladePropellerBlock;
 
 public class RandomBulkSheetAeronauticsBlocks {
     private static final CreateRegistrate REGISTRATE = RandomBulkSheet.REGISTRATE;

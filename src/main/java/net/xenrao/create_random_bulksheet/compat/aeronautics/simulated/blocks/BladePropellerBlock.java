@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks;
 
 import com.simibubi.create.foundation.item.ItemHelper;
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlock;
@@ -21,9 +21,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsBlockEntities;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsBlockEntities;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
 
 
 public class BladePropellerBlock extends BasePropellerBlock {

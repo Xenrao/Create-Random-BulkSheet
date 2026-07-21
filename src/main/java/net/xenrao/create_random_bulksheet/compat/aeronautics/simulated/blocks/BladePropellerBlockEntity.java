@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks;
 
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.kinetics.RotationPropagator;
@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.xenrao.create_random_bulksheet.RandomBulkSheetConfig;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
 
 import java.util.List;
 

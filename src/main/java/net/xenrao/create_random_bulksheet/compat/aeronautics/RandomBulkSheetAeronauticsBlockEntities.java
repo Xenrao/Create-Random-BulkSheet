@@ -1,12 +1,12 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics;
+package net.xenrao.create_random_bulksheet.compat.aeronautics;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks.BladePorpellerRenderer;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.blocks.BladePropellerBlockEntity;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks.BladePorpellerRenderer;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks.BladePropellerBlockEntity;
 
 public class RandomBulkSheetAeronauticsBlockEntities {
     private static final CreateRegistrate REGISTRATE = RandomBulkSheet.REGISTRATE;

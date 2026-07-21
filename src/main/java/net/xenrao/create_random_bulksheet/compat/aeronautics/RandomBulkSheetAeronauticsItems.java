@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics;
+package net.xenrao.create_random_bulksheet.compat.aeronautics;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
@@ -6,8 +6,8 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.items.propellar_blades.LargePropellerBlade;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.items.propellar_blades.SmallPropellerBlade;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.items.propellar_blades.LargePropellerBlade;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.items.propellar_blades.SmallPropellerBlade;
 
 public class RandomBulkSheetAeronauticsItems {
 

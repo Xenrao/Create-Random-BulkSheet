@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated;
 
 import net.neoforged.fml.ModList;
 

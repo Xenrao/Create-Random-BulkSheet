@@ -2,7 +2,7 @@ package net.xenrao.create_random_bulksheet.blocks;
 
 import com.simibubi.create.api.stress.BlockStressValues;
 import net.xenrao.create_random_bulksheet.RandomBulkSheetConfig;
-import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsBlocks;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsBlocks;
 import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
 
 public class RandomBulkSheetBlockStressValues {

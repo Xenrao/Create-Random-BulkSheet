@@ -38,12 +38,16 @@ This "fluffy" _(holy censorship! x2)_ mod is just my random fantasies I wanted t
   that changes it weight with redstone signal (also multipler can be change up to 5 with wrench)
 
 
+- **Blade Propeller** *(requires [Create Aeronautics](https://www.curseforge.com/minecraft/mc-mods/create-aeronautics))* — a propeller block 
+that provides thrust. You can install Blades up to 8 and change angle. (To generate thrust, you need at least one angle and one blade)
+
 
 ## Requirements
 
 - Minecraft 1.21.1, NeoForge
 - [Create](https://www.curseforge.com/minecraft/mc-mods/create) 6.0.7+
 - [Sable](https://www.curseforge.com/minecraft/mc-mods/sable) — optional, only needed for the Redstone Weight block
+- [Create Aeronautics](https://www.curseforge.com/minecraft/mc-mods/create-aeronautics) — optional, only needed for the Blade Propeller block
 
 ## Configuration
 
