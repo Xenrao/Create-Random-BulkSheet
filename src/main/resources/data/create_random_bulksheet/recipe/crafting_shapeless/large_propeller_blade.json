@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create_random_bulksheet:small_propeller_blade"
+    },
+    {
+      "item": "create_random_bulksheet:small_propeller_blade"
+    }
+  ],
+  "result": {
+    "id": "create_random_bulksheet:large_propeller_blade",
+    "count": 1
+  }
+}

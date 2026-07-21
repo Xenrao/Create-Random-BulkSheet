@@ -1,6 +1,5 @@
 package net.xenrao.create_random_bulksheet.items;
 
-import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -8,7 +7,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Rarity;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.RandomBulkSheetCreativeTabs;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.SimulatedCompatDispatcher;
 import net.xenrao.create_random_bulksheet.items.void_star.VoidStar;
 
 public class RandomBulkSheetItems {
@@ -26,9 +26,14 @@ public class RandomBulkSheetItems {
                             .fireResistant()
                             .rarity(Rarity.EPIC)
                     )
-                    .model((ctx, prov) -> {})
-                    .setData(ProviderType.LANG, (ctx, prov) -> {})
+                    .model((ctx, prov) -> {
+                    })
+                    .setData(ProviderType.LANG, (ctx, prov) -> {
+                    })
                     .register();
 
-    public static void register() {}
+    public static void register() {
+        if (SimulatedCompatDispatcher.isLoaded())
+            RandomBulkSheetAeronauticsItems.register();
+    }
 }

@@ -8,12 +8,16 @@
   "block.create_random_bulksheet.abyssal_energy_tank": "Abyssal Energy Tank",
   "block.create_random_bulksheet.reverse_redstone_link": "Reverse Redstone Link",
   "block.create_random_bulksheet.redstone_weight": "Redstone Weight",
+  "block.create_random_bulksheet.blade_propeller": "Blade Propeller",
 
   "item.create_random_bulksheet.void_star": "Void Star",
+  "item.create_random_bulksheet.small_propeller_blade": "Small Propeller Blade",
+  "item.create_random_bulksheet.large_propeller_blade": "Large Propeller Blade",
 
   "create_random_bulksheet.delayed_transporter.delay": "Delay",
+  "create_random_bulksheet.blade_propeller.angle": "Blade Angle",
 
-  "create_random_bulksheet.configuration.abyssal_blocks": "Abyssal Blocks",
+  "create_random_bulksheet.configuration.blocks": "Blocks",
 
   "create_random_bulksheet.configuration.abyssal_fluid_tank": "Abyssal Fluid Tank",
 
@@ -57,8 +61,16 @@
   "create_random_bulksheet.configuration.energyTankDiamondCap": "Diamond Capacity Bonus",
   "create_random_bulksheet.configuration.energyTankDiamondCap.tooltip": "Extra FE capacity granted per Diamond.",
 
+  "create_random_bulksheet.configuration.blade_propeller": "Blade Propeller",
+
+  "create_random_bulksheet.configuration.bladePropellerMaxAngle": "Blade Propeller Max Angle",
+  "create_random_bulksheet.configuration.bladePropellerMaxAngle.tooltip": "Max allowed blade angle.",
+
   "create_random_bulksheet.configuration.kinetics": "Kinetics",
 
   "create_random_bulksheet.configuration.extractorStressImpact": "Fluid Extractor Stress Impact",
-  "create_random_bulksheet.configuration.extractorStressImpact.tooltip": "Abyssal Fluid Extractor Stress Impact Value"
+  "create_random_bulksheet.configuration.extractorStressImpact.tooltip": "Abyssal Fluid Extractor Stress Impact Value",
+
+  "create_random_bulksheet.configuration.bladePropellerStressImpact": "Blade Propeller Stress Impact",
+  "create_random_bulksheet.configuration.bladePropellerStressImpact.tooltip": "Blade Propeller Stress Impact Value"
 }

@@ -14,6 +14,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlockEntities;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
+import net.xenrao.create_random_bulksheet.index.RandomBulkSheetPartialModels;
 
 @Mod(value = RandomBulkSheet.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = RandomBulkSheet.MODID, value = Dist.CLIENT)
@@ -32,6 +33,7 @@ public class RandomBulkSheetClient {
     }
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        RandomBulkSheetPartialModels.init();
         event.registerBlockEntityRenderer(
                 RandomBulkSheetBlockEntities.REVERSE_REDSTONE_LINK.get(),
                 ReverseRedstoneLinkRenderer::new

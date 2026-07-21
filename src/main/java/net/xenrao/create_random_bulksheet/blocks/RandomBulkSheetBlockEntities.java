@@ -10,6 +10,8 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluid
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.fan_result_transporter.FanResultTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.reverse_redstone_link.ReverseRedstoneLinkBlockEntity;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsBlockEntities;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.SimulatedCompatDispatcher;
 
 public class RandomBulkSheetBlockEntities {
 
@@ -50,5 +52,8 @@ public class RandomBulkSheetBlockEntities {
                     .register();
 
 
-    public static void register() {}
+    public static void register() {
+        if (SimulatedCompatDispatcher.isLoaded())
+            RandomBulkSheetAeronauticsBlockEntities.register();
+    }
 }

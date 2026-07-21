@@ -6,6 +6,9 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsBlocks;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronatuics.simulated.SimulatedCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.blocks.RandomBulkSheetSableBlocks;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
@@ -32,8 +35,14 @@ public class RandomBulkSheetCreativeTabs {
                                 output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK.asStack());
+
                                 if (SableCompatDispatcher.isLoaded()) {
                                     output.accept(RandomBulkSheetSableBlocks.REDSTONE_WEIGHT.asStack());
+                                }
+                                if (SimulatedCompatDispatcher.isLoaded()) {
+                                    output.accept(RandomBulkSheetAeronauticsBlocks.BLADE_PROPELLER.asStack());
+                                    output.accept(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE.asStack());
+                                    output.accept(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE.asStack());
                                 }
                                 //Item
                                 output.accept(RandomBulkSheetItems.VOID_STAR.asStack());

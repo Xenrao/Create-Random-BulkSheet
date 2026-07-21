@@ -3,13 +3,14 @@ package net.xenrao.create_random_bulksheet;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class RandomBulkSheetConfig {
+
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+    // --- Abyssal Fluid Tank ---
     static {
-        BUILDER.push("abyssal_blocks");
+        BUILDER.push("blocks");
         BUILDER.push("abyssal_fluid_tank");
     }
-    // --- Abyssal Fluid Tank ---
     public static final ModConfigSpec.IntValue ABYSSAL_FLUID_TANK_BASE_CAPACITY = BUILDER
             .comment("Base capacity (in mB) of the Abyssal Fluid Tank.")
             .defineInRange("fluidTankBaseCapacity", 1000000, 1, Integer.MAX_VALUE);
@@ -30,10 +31,10 @@ public class RandomBulkSheetConfig {
         BUILDER.pop();
     }
 
+    // --- Abyssal Fluid Extractor ---
     static {
         BUILDER.push("abyssal_fluid_extractor");
     }
-    // --- Abyssal Fluid Extractor ---
     public static final ModConfigSpec.BooleanValue ABYSSAL_FLUID_EXTRACTOR_ENFORCE_VOID_STAR = BUILDER
             .comment("If false, the Void Star requirement is ignored entirely - both for recipes that set",
                     "requires_void_star and for the hardcoded rule that non-vanilla fluids need it when no",
@@ -57,12 +58,11 @@ public class RandomBulkSheetConfig {
     static {
         BUILDER.pop();
     }
-
+    // --- Abyssal Energy Tank ---
     static {
         BUILDER.push("abyssal_energy_tank");
     }
 
-    // --- Abyssal Energy Tank ---
     public static final ModConfigSpec.IntValue ABYSSAL_ENERGY_TANK_BASE_CAPACITY = BUILDER
             .comment("Base capacity (in FE) of the Abyssal Energy Tank.")
             .defineInRange("energyTankBaseCapacity", 10000000, 1, Integer.MAX_VALUE);
@@ -81,6 +81,18 @@ public class RandomBulkSheetConfig {
 
     static {
         BUILDER.pop();
+    }
+
+    // --- Blade Propeller ---
+    static {
+        BUILDER.push("blade_propeller");
+    }
+    public static final ModConfigSpec.IntValue BLADE_PROPELLER_MAX_BLADE_ANGLE = BUILDER
+            .comment("Blade Propeller max allowed blade angle")
+            .defineInRange("bladePropellerMaxAngle", 45, 1, 90);
+
+    static {
+        BUILDER.pop();
         BUILDER.pop();
     }
 
@@ -92,6 +104,10 @@ public class RandomBulkSheetConfig {
             .comment("Abyssal Fluid Extractor Stress Impact Value")
             .defineInRange("extractorStressImpact", 512, 1, Double.MAX_VALUE);
 
+    public static final ModConfigSpec.DoubleValue BLADE_PROPELLER_STRESS_IMPACT = BUILDER
+            .comment("Blade Propeller Stress Impact Value",
+                    "Create Aeronautics must be installed for the block to be usable.")
+            .defineInRange("bladePropellerStressImpact", 4, 1, Double.MAX_VALUE);
 
     static {
         BUILDER.pop();

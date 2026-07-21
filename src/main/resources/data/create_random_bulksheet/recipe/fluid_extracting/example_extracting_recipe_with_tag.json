@@ -1,6 +1,0 @@
-{
-  "type": "create_random_bulksheet:fluid_extracting",
-  "fluid": "#create_random_bulksheet:random_fluid",
-  "mb_per_tick_per_rpm": 0.0012,
-  "requires_void_star": false
-}

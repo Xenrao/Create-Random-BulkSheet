@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L",
+    "P",
+    "S"
+  ],
+  "key": {
+    "L": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "P": {
+      "item": "create:precision_mechanism"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "result": {
+    "id": "create_random_bulksheet:blade_propeller",
+    "count": 1
+  }
+}
