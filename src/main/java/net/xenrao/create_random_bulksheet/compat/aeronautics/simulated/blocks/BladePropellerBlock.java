@@ -27,6 +27,9 @@ import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAero
 
 public class BladePropellerBlock extends BasePropellerBlock {
 
+    public BladePropellerBlock(final Properties properties) {
+        super(properties);
+    }
 
     private static final VoxelShape SHAPE = Shapes.or(
             Block.box(0, 0.001, 0, 16, 12, 16),
@@ -36,9 +39,6 @@ public class BladePropellerBlock extends BasePropellerBlock {
 
     private static final VoxelShaper SHAPER = VoxelShaper.forDirectional(SHAPE, Direction.UP);
 
-    public BladePropellerBlock(final Properties properties) {
-        super(properties);
-    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {

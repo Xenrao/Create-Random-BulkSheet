@@ -55,6 +55,12 @@ public class FanResultTransporterBlock extends DirectedDirectionalBlock implemen
 
     private static final VoxelShaper SHAPER = VoxelShaper.forDirectional(SHAPE, Direction.DOWN);
 
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+        return SHAPER.get(getTargetDirection(state));
+    }
+
+
     public static Direction getTargetDirection(BlockState pState) {
         switch ((AttachFace) pState.getValue(TARGET)) {
             case CEILING:
@@ -65,12 +71,6 @@ public class FanResultTransporterBlock extends DirectedDirectionalBlock implemen
                 return pState.getValue(FACING);
         }
     }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        return SHAPER.get(getTargetDirection(state));
-    }
-
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

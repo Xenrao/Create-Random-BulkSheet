@@ -24,6 +24,7 @@ import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_extractor.Abyssal
 import net.xenrao.create_random_bulksheet.blocks.abyssal_fluid_tank.AbyssalFluidTankBlockEntity;
 import net.xenrao.create_random_bulksheet.blocks.delayed_transporter.DelayedTransporterBlockEntity;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
+import net.xenrao.create_random_bulksheet.radio.RadioRegister;
 import net.xenrao.create_random_bulksheet.recipe.RandomBulkSheetRecipes;
 import org.slf4j.Logger;
 
@@ -44,7 +45,7 @@ public class RandomBulkSheet {
         RandomBulkSheetItems.register();
         RandomBulkSheetBlocks.register();
         RandomBulkSheetBlockEntities.register();
-
+        RadioRegister.register();
         RandomBulkSheetCreativeTabs.TABS.register(modEventBus);
 
         RandomBulkSheetRecipes.register(modEventBus);
