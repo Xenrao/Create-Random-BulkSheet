@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.items.propellar_blades;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.items.propeller_blades;
 
 import net.minecraft.world.item.Item;
 

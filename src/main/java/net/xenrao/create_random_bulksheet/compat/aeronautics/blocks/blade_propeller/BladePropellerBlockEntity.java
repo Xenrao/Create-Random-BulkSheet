@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.blocks.blade_propeller;
 
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.content.kinetics.RotationPropagator;
@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.xenrao.create_random_bulksheet.RandomBulkSheetConfig;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.items.RandomBulkSheetAeronauticsItems;
 
 import java.util.List;
 
@@ -141,17 +141,26 @@ public class BladePropellerBlockEntity extends BasePropellerBlockEntity {
     public void addBlade(ItemStack blade, Player player) {
         for (int i = 0; i < inventory.getSlots(); i++) {
             if (inventory.getStackInSlot(i).isEmpty()) {
+                ItemStack toInsert = blade.copy();
+                toInsert.setCount(1);
 
-                inventory.insertItem(i, blade, false);
+                ItemStack remainder = inventory.insertItem(i, toInsert, false);
+
+                if (!remainder.isEmpty()) {
+                    break;
+                }
+
                 if (blade.is(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE)) {
                     this.smallBladeCount++;
                     if (!player.isCreative())
                         blade.shrink(1);
-                } else
+                } else if (blade.is(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE)) {
                     this.largeBladeCount++;
+                    if (!player.isCreative())
+                        blade.shrink(1);
+                }
                 break;
             }
-
         }
         recalculateEfficiency();
         notifyUpdate();

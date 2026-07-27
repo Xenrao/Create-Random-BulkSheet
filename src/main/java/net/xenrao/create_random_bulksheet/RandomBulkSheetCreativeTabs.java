@@ -6,9 +6,9 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.xenrao.create_random_bulksheet.blocks.RandomBulkSheetBlocks;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsBlocks;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.SimulatedCompatDispatcher;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.blocks.RandomBulkSheetAeronauticsBlocks;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.items.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.AeronauticsCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.SableCompatDispatcher;
 import net.xenrao.create_random_bulksheet.compat.sable.blocks.RandomBulkSheetSableBlocks;
 import net.xenrao.create_random_bulksheet.items.RandomBulkSheetItems;
@@ -39,7 +39,7 @@ public class RandomBulkSheetCreativeTabs {
                                 if (SableCompatDispatcher.isLoaded()) {
                                     output.accept(RandomBulkSheetSableBlocks.REDSTONE_WEIGHT.asStack());
                                 }
-                                if (SimulatedCompatDispatcher.isLoaded()) {
+                                if (AeronauticsCompatDispatcher.isLoaded()) {
                                     output.accept(RandomBulkSheetAeronauticsBlocks.BLADE_PROPELLER.asStack());
                                     output.accept(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE.asStack());
                                     output.accept(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE.asStack());

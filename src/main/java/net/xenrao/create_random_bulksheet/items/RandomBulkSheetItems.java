@@ -7,8 +7,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Rarity;
 import net.xenrao.create_random_bulksheet.RandomBulkSheet;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.SimulatedCompatDispatcher;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.items.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.AeronauticsCompatDispatcher;
 import net.xenrao.create_random_bulksheet.items.void_star.VoidStar;
 
 public class RandomBulkSheetItems {
@@ -33,7 +33,7 @@ public class RandomBulkSheetItems {
                     .register();
 
     public static void register() {
-        if (SimulatedCompatDispatcher.isLoaded())
+        if (AeronauticsCompatDispatcher.isLoaded())
             RandomBulkSheetAeronauticsItems.register();
     }
 }

@@ -1,4 +1,4 @@
-package net.xenrao.create_random_bulksheet.compat.aeronautics.simulated.blocks;
+package net.xenrao.create_random_bulksheet.compat.aeronautics.blocks.blade_propeller;
 
 import com.simibubi.create.foundation.item.ItemHelper;
 import dev.eriksonn.aeronautics.content.blocks.propeller.small.BasePropellerBlock;
@@ -21,8 +21,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsBlockEntities;
-import net.xenrao.create_random_bulksheet.compat.aeronautics.RandomBulkSheetAeronauticsItems;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.blocks.RandomBulkSheetAeronauticsBlockEntities;
+import net.xenrao.create_random_bulksheet.compat.aeronautics.items.RandomBulkSheetAeronauticsItems;
 
 
 public class BladePropellerBlock extends BasePropellerBlock {
@@ -52,13 +52,14 @@ public class BladePropellerBlock extends BasePropellerBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof BladePropellerBlockEntity pbe) {
-                if (pbe.getBladeCount() > 0) {
-                    pbe.removeBlade(player);
-                    return InteractionResult.SUCCESS;
-                }
+        if (level.isClientSide)
+            return InteractionResult.PASS;
+
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof BladePropellerBlockEntity pbe) {
+            if (!pbe.inventory.getStackInSlot(0).isEmpty()) {
+                pbe.removeBlade(player);
+                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
@@ -66,20 +67,19 @@ public class BladePropellerBlock extends BasePropellerBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!(stack.is(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE) || stack.is(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE)))
+        if (level.isClientSide)
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        if (!level.isClientSide) {
+        if (stack.is(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE) || stack.is(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE)) {
             BlockEntity be = level.getBlockEntity(pos);
 
             if (be instanceof BladePropellerBlockEntity pbe) {
-                if (pbe.getBladeCount() == 8)
-                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-                pbe.addBlade(stack,player);
-                return ItemInteractionResult.SUCCESS;
+                if (pbe.inventory.getStackInSlot(7).isEmpty()) {
+                    pbe.addBlade(stack, player);
+                    return ItemInteractionResult.SUCCESS;
+                }
             }
         }
-
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
