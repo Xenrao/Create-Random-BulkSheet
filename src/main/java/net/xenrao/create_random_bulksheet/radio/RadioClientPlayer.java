@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class RadioClientPlayer {
 
 
-    private static final float SIDE_BLEED = 0.1f;
+    private static final float SIDE_BLEED = 0.05f;
 
     private static final Map<UUID, ActiveStream> activeStreams = new ConcurrentHashMap<>();
 
@@ -141,10 +141,10 @@ public class RadioClientPlayer {
             Vec3 listenerPos = SableCompatDispatcher.isLoaded() ? mc.gameRenderer.getMainCamera().getPosition() : player.position();
             double distance = listenerPos.distanceTo(Vec3.atCenterOf(pos));
 
-            float maxDist = 32.0f;
+            float maxDist = 80.0f;
             if (distance >= maxDist) return new float[]{0f, 0f};
 
-            float ratio = (float) (1.0 - (distance / maxDist));
+            float ratio = (float) (0.8 - (distance / maxDist));
             baseVol *= (ratio * ratio);
 
             if (baseVol <= 0.001f) return new float[]{0f, 0f};
