@@ -71,7 +71,7 @@ public class AbyssalFluidExtractorBlock extends HorizontalKineticBlock implement
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (!pState.is(pNewState.getBlock())) {
+        if (!pIsMoving && !pState.is(pNewState.getBlock())) {
             if (!pLevel.isClientSide) {
                 if (pLevel.getBlockEntity(pPos) instanceof AbyssalFluidExtractorBlockEntity be) {
                     if (be.hasVoidStar)

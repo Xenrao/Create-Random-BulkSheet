@@ -23,17 +23,26 @@ import net.xenrao.create_random_bulksheet.recipe.RandomBulkSheetRecipes;
 
 /**
  * "Fluid Extracting" recipe.
- * JSON'da "fluid" alanı:
- *   - direkt fluid id: "minecraft:lava"
- *   - tag: "#minecraft:lava"
- * ikisi de aynı alanda desteklenir.
  *
- * mbPerTickPerRpm: her tick, blogun uzerindeki RPM ile carpilip
- * bloğun gecici haznesine (fluidAmount) eklenir.
+ * The "fluid" field in JSON supports both:
+ *   - a direct fluid ID: "minecraft:lava"
+ *   - a fluid tag: "#minecraft:lava"
  *
- * requiresVoidStar: bu tarifin calismasi icin Void Star (eski "infinite" flag) sarti var mi.
- * Not: config'deki "enforceVoidStarRequirement" false ise bu sart tamamen yok sayilir (easy mode).
+ * Both formats use the same field.
+ *
+ * mbPerTickPerRpm:
+ * The amount of fluid (in mB) generated every tick, multiplied by the
+ * rotational speed (RPM) of the block. The result is added to the block's
+ * internal temporary fluid buffer (fluidAmount).
+ *
+ * requiresVoidStar:
+ * Whether this recipe requires a Void Star to operate.
+ *
+ * Note:
+ * If the config option "enforceVoidStarRequirement" is set to false,
+ * this requirement is completely ignored (easy mode).
  */
+
 public record FluidExtractingRecipe(
         Either<TagKey<Fluid>, Fluid> fluidInput,
         float mbPerTickPerRpm,
@@ -45,14 +54,14 @@ public record FluidExtractingRecipe(
                 if (str.startsWith("#")) {
                     ResourceLocation id = ResourceLocation.tryParse(str.substring(1));
                     if (id == null)
-                        return DataResult.error(() -> "Gecersiz tag id: " + str);
+                        return DataResult.error(() -> "Invalid fluid tag ID: " + str);
                     return DataResult.success(Either.left(TagKey.create(Registries.FLUID, id)));
                 }
                 ResourceLocation id = ResourceLocation.tryParse(str);
                 if (id == null)
-                    return DataResult.error(() -> "Gecersiz fluid id: " + str);
+                    return DataResult.error(() -> "Invalid fluid ID: " + str);
                 if (!BuiltInRegistries.FLUID.containsKey(id))
-                    return DataResult.error(() -> "Bilinmeyen fluid: " + str);
+                    return DataResult.error(() -> "Unknown fluid: " + str);
                 return DataResult.success(Either.right(BuiltInRegistries.FLUID.get(id)));
             },
             either -> either.map(
@@ -91,9 +100,12 @@ public record FluidExtractingRecipe(
     );
 
     /**
-     * Bu tarifin verilen sivi ile eslesip eslesmedigini kontrol eder.
-     * Blok entity tarafindan dogrudan cagrilir - vanilla matches() burada kullanilmiyor.
+     * Checks whether this recipe matches the given fluid.
+     *
+     * This method is called directly by the block entity.
+     * The vanilla Recipe#matches() method is not used for fluid matching.
      */
+
     public boolean matchesFluid(Fluid fluid) {
         return fluidInput.map(
                 tag -> BuiltInRegistries.FLUID.wrapAsHolder(fluid).is(tag),
@@ -101,11 +113,11 @@ public record FluidExtractingRecipe(
         );
     }
 
-    // ================= Recipe<RecipeInput> boilerplate - bu tarif bir crafting grid'i kullanmiyor =================
+    // ================= Recipe<RecipeInput> boilerplate =================
 
     @Override
     public boolean matches(RecipeInput input, Level level) {
-        return false; // Kullanilmiyor, eslesme matchesFluid() ile manuel yapiliyor
+        return false; // Not used. Matching is handled manually via matchesFluid().
     }
 
     @Override

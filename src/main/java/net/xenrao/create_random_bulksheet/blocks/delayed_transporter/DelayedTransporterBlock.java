@@ -64,7 +64,7 @@ public class DelayedTransporterBlock extends DirectedDirectionalBlock implements
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean pIsMoving) {
-        if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
+        if (!pIsMoving && state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
             BlockEntity be = world.getBlockEntity(pos);
             if (!(be instanceof DelayedTransporterBlockEntity delayedTransporterBE))
                 return;

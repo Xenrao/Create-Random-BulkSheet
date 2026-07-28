@@ -23,8 +23,7 @@ public class RandomBulkSheetAeronauticsBlocks {
                     .initialProperties(SharedProperties::wooden)
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE)
                     .properties(p -> p
-                            .mapColor(MapColor.COLOR_LIGHT_GRAY)
-                            .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.TERRACOTTA_BROWN)
                     )
                     .blockstate((ctx, prov) -> {
                     })

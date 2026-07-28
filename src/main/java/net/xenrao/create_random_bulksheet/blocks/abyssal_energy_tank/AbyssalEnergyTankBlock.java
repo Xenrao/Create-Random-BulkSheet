@@ -52,7 +52,7 @@ public class AbyssalEnergyTankBlock extends Block implements IWrenchable, IBE<Ab
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
+        if (!movedByPiston && !state.is(newState.getBlock())) {
             if (!level.isClientSide) {
                 BlockEntity be = level.getBlockEntity(pos);
 

@@ -10,8 +10,6 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.joml.Vector3d;
 
-// DİKKAT: Bu sınıfa sadece SableCompatDispatcher.isLoaded() true iken eriş.
-// Bu sınıf ayrı tutulduğu için Sable yüklenmemişse JVM bunu hiç resolve etmeye çalışmaz.
 public class SableCompat {
 
     public static IItemHandler grabCapability(Level level, BlockPos checkPos, Direction opposite) {

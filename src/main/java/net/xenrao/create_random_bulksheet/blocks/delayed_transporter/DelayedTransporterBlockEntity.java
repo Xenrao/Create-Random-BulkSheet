@@ -144,8 +144,6 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
         }
     }
 
-    // --- Capability cache yardımcıları (chute'tan alınan pattern) ---
-
     private IItemHandler grabCapability(Direction side) {
         BlockPos checkPos = worldPosition.relative(side);
         Direction opposite = side.getOpposite();
@@ -158,8 +156,6 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
         } else {
             cached = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, opposite);
         }
-
-        // Normal lookup başarısızsa ve Sable yüklüyse, sub-level üzerinden dene
         return SableCompatDispatcher.grabCapabilityWithFallback(level, cached, checkPos, opposite);
     }
 
@@ -168,8 +164,6 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
         capCaches.clear();
         super.invalidate();
     }
-
-    // --- Tick mantığı ---
 
     @Override
     public void tick() {
@@ -208,7 +202,7 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
             }
         }
 
-        tryOutputItem(); // envanterde item varsa hemen çıkışı da dene
+        tryOutputItem();
     }
 
     private boolean canAcceptItem(ItemStack incoming) {
@@ -238,7 +232,6 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
         }
     }
 
-    // Sadece envantere koyar / komşu envantere aktarır - YERE ITEM ATMAZ
     private void tryOutputItem() {
         ItemStack stack = inventory.getStackInSlot(0);
         if (stack.isEmpty()) return;
@@ -247,6 +240,5 @@ public class DelayedTransporterBlockEntity extends SmartBlockEntity {
         if (handlerBelow != null) {
             inventory.setStackInSlot(0, ItemHandlerHelper.insertItem(handlerBelow, stack, false));
         }
-        // handlerBelow null ise hiçbir şey yapma, item kendi envanterinde beklemeye devam eder
     }
 }

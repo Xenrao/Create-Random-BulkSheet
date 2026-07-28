@@ -10,6 +10,8 @@ This "fluffy" _(holy censorship! x2)_ mod is just my random fantasies I wanted t
 
 ## What's in the box for now?
 
+![Preview Blocks](https://media.forgecdn.net/attachments/1824/681/2026-07-28_03-46-59-png.png)
+
 - **Delayed Transporter** — moves items like a chute, except it holds onto them for a configurable
   amount of time first.
 

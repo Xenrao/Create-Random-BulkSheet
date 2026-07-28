@@ -85,7 +85,7 @@ public class BladePropellerBlock extends BasePropellerBlock {
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (pState.hasBlockEntity() && (pState.getBlock() != pNewState.getBlock() || !pNewState.hasBlockEntity())) {
+        if (!pIsMoving && pState.hasBlockEntity() && (pState.getBlock() != pNewState.getBlock() || !pNewState.hasBlockEntity())) {
             BlockEntity be = pLevel.getBlockEntity(pPos);
             if (!(be instanceof BladePropellerBlockEntity bpbe))
                 return;
