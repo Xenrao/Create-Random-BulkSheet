@@ -28,24 +28,31 @@ public class RandomBulkSheetCreativeTabs {
                             .icon(RandomBulkSheetItems.VOID_STAR::asStack)
 
                             .displayItems((parameters, output) -> {
+                                //Item
+                                output.accept(RandomBulkSheetItems.VOID_STAR.asStack());
+
                                 //Block
+                                output.accept(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK.asStack());
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_FLUID_TANK.asStack());
                                 output.accept(RandomBulkSheetBlocks.ABYSSAL_FLUID_EXTRACTOR.asStack());
-                                output.accept(RandomBulkSheetBlocks.ABYSSAL_ENERGY_TANK.asStack());
-                                output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.FAN_RESULT_TRANSPORTER.asStack());
+                                output.accept(RandomBulkSheetBlocks.DELAYED_TRANSPORTER.asStack());
                                 output.accept(RandomBulkSheetBlocks.REVERSE_REDSTONE_LINK.asStack());
 
+                                //Compat
                                 if (SableCompatDispatcher.isLoaded()) {
+                                    //Block
                                     output.accept(RandomBulkSheetSableBlocks.REDSTONE_WEIGHT.asStack());
                                 }
                                 if (AeronauticsCompatDispatcher.isLoaded()) {
+                                    //Block
                                     output.accept(RandomBulkSheetAeronauticsBlocks.BLADE_PROPELLER.asStack());
+
+                                    //Item
                                     output.accept(RandomBulkSheetAeronauticsItems.SMALL_PROPELLER_BLADE.asStack());
                                     output.accept(RandomBulkSheetAeronauticsItems.LARGE_PROPELLER_BLADE.asStack());
                                 }
-                                //Item
-                                output.accept(RandomBulkSheetItems.VOID_STAR.asStack());
+
                             })
 
                             .build()

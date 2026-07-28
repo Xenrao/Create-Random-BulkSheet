@@ -1,6 +1,7 @@
 {
   "itemGroup.random_bulksheet": "Create: Random 'BulkSheet'",
 
+
   "block.create_random_bulksheet.delayed_transporter": "Delayed Transporter",
   "block.create_random_bulksheet.fan_result_transporter": "Fan Result Transporter",
   "block.create_random_bulksheet.abyssal_fluid_tank": "Abyssal Fluid Tank",
@@ -10,12 +11,15 @@
   "block.create_random_bulksheet.redstone_weight": "Redstone Weight",
   "block.create_random_bulksheet.blade_propeller": "Blade Propeller",
 
+
   "item.create_random_bulksheet.void_star": "Void Star",
   "item.create_random_bulksheet.small_propeller_blade": "Small Propeller Blade",
   "item.create_random_bulksheet.large_propeller_blade": "Large Propeller Blade",
 
+
   "create_random_bulksheet.delayed_transporter.delay": "Delay",
   "create_random_bulksheet.blade_propeller.angle": "Blade Angle",
+
 
   "create_random_bulksheet.configuration.blocks": "Blocks",
 
@@ -72,5 +76,30 @@
   "create_random_bulksheet.configuration.extractorStressImpact.tooltip": "Abyssal Fluid Extractor Stress Impact Value",
 
   "create_random_bulksheet.configuration.bladePropellerStressImpact": "Blade Propeller Stress Impact",
-  "create_random_bulksheet.configuration.bladePropellerStressImpact.tooltip": "Blade Propeller Stress Impact Value"
+  "create_random_bulksheet.configuration.bladePropellerStressImpact.tooltip": "Blade Propeller Stress Impact Value",
+
+
+  "block.create_random_bulksheet.fan_result_transporter.tooltip.summary": "Captures the result of a Fan processing recipe on the ground and inserts it directly into an attached storage block.",
+
+  "block.create_random_bulksheet.delayed_transporter.tooltip.summary": "Moves items with a delay.",
+  "block.create_random_bulksheet.delayed_transporter.tooltip.condition1": "When Attached to a Block",
+  "block.create_random_bulksheet.delayed_transporter.tooltip.behaviour1": "Transfers items every X ticks",
+  "block.create_random_bulksheet.delayed_transporter.tooltip.condition2": "When Attached to Nothing",
+  "block.create_random_bulksheet.delayed_transporter.tooltip.behaviour2": "Transfers items on the ground once their age exceeds X ticks",
+
+  "block.create_random_bulksheet.abyssal_fluid_extractor.tooltip.summary": "Slowly extracts and duplicates the fluid on top of it.",
+
+  "block.create_random_bulksheet.abyssal_fluid_tank.tooltip.summary": "A fluid storage tank whose capacity grows as you feed it rare materials.",
+  "block.create_random_bulksheet.abyssal_fluid_tank.tooltip.condition1": "Bottomless Supply",
+  "block.create_random_bulksheet.abyssal_fluid_tank.tooltip.behaviour1": "Provides an infinite supply of its stored fluid once _Void Star_ is installed and capacity reaches the Bottomless Supply threshold",
+
+  "block.create_random_bulksheet.abyssal_energy_tank.tooltip.summary": "An FE storage tank whose capacity grows as you feed it with rare materials.",
+
+  "block.create_random_bulksheet.reverse_redstone_link.tooltip.summary": "A Redstone Link that inverts the signal it receives.",
+
+  "block.create_random_bulksheet.redstone_weight.tooltip.summary": "",
+  "block.create_random_bulksheet.redstone_weight.tooltip.condition1": "When Powered",
+  "block.create_random_bulksheet.redstone_weight.tooltip.behaviour1": "Weight changes based on the redstone signal",
+  "block.create_random_bulksheet.redstone_weight.tooltip.condition2": "When Wrenched",
+  "block.create_random_bulksheet.redstone_weight.tooltip.behaviour2": "Adjusts the weight multiplier, up to 5x"
 }
