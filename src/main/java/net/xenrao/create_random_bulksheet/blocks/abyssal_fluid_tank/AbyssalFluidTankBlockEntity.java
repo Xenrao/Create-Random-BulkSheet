@@ -87,7 +87,7 @@ public class AbyssalFluidTankBlockEntity extends SmartBlockEntity implements IHa
     }
 
     private static int getInfiniteThreshold() {
-        return AllConfigs.server().fluids.hosePulleyBlockThreshold.get();
+        return AllConfigs.server().fluids.hosePulleyBlockThreshold.get() * 1000;
     }
 
     private long computeCapacity() {
